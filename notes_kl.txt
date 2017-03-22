@@ -1,9 +1,0 @@
-Publisher / Indicia_Publisher / Brand Group :
-year_began/year_ended : c'est pas mieux de faire un link avec series ? (is last, is first)
-
-Series: 
-J'ai dupliqué publication_dates -> first and last
-
-Artist: Je pense qu'on peut la laisser et ce qu'on fera c'est une table qui représente artiste : artisteID storyID (et on pourra mettre des doubles dedans). Faudra par contre delete les args artisteID de Story et storyID de artist.
-
---> Et du coup j'imagine qu'on peut créer une table characters, genre parce que feature ça va un peu avec apparemment ? 
