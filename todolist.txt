@@ -1,27 +1,39 @@
 TODO LIST
 
+ER (draw.io)
+Modifier les flèches comme il l'a dit dans le pdf. Comme on doit rendre cette partie là aussi...
+
 Database
 J'ai créé des scripts qui écrivent des queries INSERT (ajouter dans la db) dans des fichiers sql depuis les csv (series.php, story.php, brand_group.php...). Ces fichiers sql doivent être importés depuis phpmyadmin, en enlevant "Activer le check des foreign key". On peut varier le nombre et quelles queries à insert depuis le script (ils sont pas très clean, y'a des comments pour print dans la page, ou des range qui sont différents, bref). 
 
 Avec ça on peut avoir la base des bdd. Ce qu'il faut faire maintenant c'est :
-- parser : 
-	- modifier les datas pour qu'elles rentrent dans le bon type (je pense à toutes les dates qui devraient être date/datetime à la place de varchar -> donc il faudrait une fonction qui get )
+- parser :  TIM
+	- modifier les datas pour qu'elles rentrent dans le bon type. Je pense à toutes les dates qui devraient être date à la place de varchar -> donc il faudrait une fonction qui get l'année d'une string --> j'ai tenté d'aussi get le jour quand il était dispo mais c'était de la grosse merde... Je crois qu'il va falloir faire beaucoup d'assumptions pour ça, parce que j'ai vu des 1870's, 1890-03-02 ou 1830 ou July 18 1987... Est-ce qu'on garde que l'année à chaque fois ou on essaie d'avoir aussi les jours quand c'est dispo ? (sachant que je crois qu'on est obligé d'avoir une date du style aaaa-mm-jj)
 	- j'ai déjà réglé le cas des null values, mais si vous trouvez des entrées inutiles, ce serait bien de les passer à null aussi (juste modifier ma fonction).
 
-A noter qu'il n'y a pas besoin d'utiliser les data dans la base de données pour parser, utiliser les csv suffit. C'est juste qu'on n'a pas les types du coup y'a moins de contrainte, et il y a moins de lignes absurdes aussi...
+	A noter qu'il n'y a pas besoin d'utiliser les data dans la base de données pour parser, utiliser les csv suffit. C'est juste qu'on n'a pas les types du coup y'a moins de contrainte, et il y a moins de lignes absurdes aussi...
 
-- créer des nouvelles tables à partir des données:
--- je pense ici à [has_inks, has_pencils...], characters... qui n'ont pas été entrées dans les tables et qui doivent être ajouté à part par un script qui aurait la même tronche que mes premiers scripts (insert raw dans artist, insert id dans has_X).  
--- il y a aussi website_id : je l'ai passé en text pour entrer raw les datas, mais il faut ici retrieve l'url, l'insert dans la table Website et changer l'url par l'id. [website: url] - [publisher: website_id]
+- créer des nouvelles tables à partir des données: KIM
+	- je pense ici à [has_inks, has_pencils...], characters, genre... qui n'ont pas été entrées dans les tables et qui doivent être ajouté à part par un script qui aurait la même tronche que mes premiers scripts (insert raw dans artist, insert id dans has_X).  
+	- il y a aussi website_id : je l'ai passé en text pour entrer raw les datas, mais il faut ici retrieve l'url, l'insert dans la table Website et changer l'url par l'id. [website: url] - [publisher: website_id]
 
+	Là c'est nécessaire d'avoir un peu de data dans la db.
 
-Queries
-Il y a une liste de queries auquel réfléchir à comment les effectuer (des select, insert, delete...). Ce serait bien qu'on y pense toutes pour avoir les plus optimales, c'est pas bcq de boulot. Faut juste bien les écrire histoire qu'elles marchent et qu'on puisse s'en inspirer pour l'interface. Pour ça j'imagine que ce serait plus simple d'avoir une db à moitié pleine (pour les tests) puis ensuite pleine (pour tester la vitesse --> parce que c'est ce qui importe pour les assistants).
+	
+
+Queries LUCIE
+Il y a une liste de queries auquelles réfléchir à comment les effectuer (des select, insert, delete...). Faut juste bien les écrire histoire qu'elles marchent et qu'on puisse direct les utiliser pour l'interface. Pour ça j'imagine que ce serait plus simple d'avoir une db à moitié pleine (pour les tests) puis ensuite pleine (pour tester la vitesse --> parce que c'est ce qui importe pour les assistants).
+
 
 
 Interface
-Je peux me dévouer pour la faire mais je raconte en gros:
-Il faut créer un formulaire qui insert, select et delete. J'ai fait un brouillon avec des boutons radios et tout, qui passe déjà les données à la page qui process. Et dans cette page process elle get les datas à utiliser pour insert ou à utiliser comme condition where pour delete ou select. Cette page devrait renvoyer le résultat de la query à la page de base qui affiche. En vrai j'ai déjà fait ça avant ça me prendrait le moins de temps à faire.  
+- insert: faire un formulaire avec les columns et insert -> faire attention aux conditions des entrées -> XSS ! KIM
+- search & delete : faire un select * WHERE touteslescolumns LIKE "%search%" (à vérifier). Faudrait trouver un moyen plus efficace. Je propose qu'on ajoute un bouton "delete" ici, genre il delete le current. LUCIE
+- queries : juste runner les queries qu'on a trouvé au dessus. Very easy si on les a bien écrit. TIM
+
+
+
+J'ai réparti le boulot mais vous pouvez dire si ça vous plaît pas !
 
 
 Note: En vrai j'aurais pu faire un script qui insert direct plutôt que de se faire chier avec un import, mais la commande qui annule le check des foreign key marche pas trop...
