@@ -15,6 +15,21 @@ function parseNullValue($s) {
 	return false;
 }
 
+function parseNullValueWebsite($s) {
+
+	if(empty($s)) return true;
+
+	$nullValues = ['NULL', '[nn]', '[none]','?', 'none', 'url']; // url comes from first line of csv
+	foreach($nullValues as $n) {
+		$res = strpos($s, $n);
+		if ($res !== false) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
 function parseDoubleQuote($s) {
 
 	if(parseNullValue($s)) return "NULL";
@@ -49,9 +64,9 @@ function getDateFromYear($year) {
 	}
 
 	$month=1; $day=1;
-    $hour=0; $minute=0; $second=0;
+	$hour=0; $minute=0; $second=0;
 
-    return '"'.$res.'-'.$month.'-'.$day.'"';
+	return '"'.$res.'-'.$month.'-'.$day.'"';
 }
 
 function getInt($i) {
@@ -62,4 +77,84 @@ function getInt($i) {
 	$i = preg_replace("/\[*\]*/" ,"", $i);
 
 	return $i;
+}
+
+// return last index used in csv - useful for assigning id
+function getLastIndex($file) {
+	$index;
+	while((!feof($file)) && ($val = fgetcsv($file))){
+		$index = $val[0];
+	}
+	return (empty($index)) ? 0 : $index+1;
+}
+
+// return words separated by delimiter
+function parseNames($s, $delimiter=";"){
+	// get rid of first and last double quotes
+	$string = substr($s, 1, -1);
+	$array = explode($delimiter, $string);
+	for($i = 0; $i< sizeof($array); $i++){
+		$array[$i] = ltrim($array[$i]);
+	}
+	return $array;
+}
+
+// return true if $s in contained in $csv file (opened) (at position $pos), false otherwise
+function isInCsv($file, $s, $pos){
+
+	rewind($file);
+
+	if(empty($s)) {
+		return false;
+	}
+
+	while(! feof($file)){
+		$val = fgetcsv($file);
+		if($val[$pos]==$s) {
+			return true;
+		}
+	}
+	return false;
+}
+
+// return true if $s in contained in $csv file (opened) (at position $pos), false otherwise
+function isInCsvName($file, $s, $pos){
+
+	rewind($file);
+
+	if(empty($s)) {
+		return false;
+	}
+
+	$string = parseToCompare($s);
+
+	while(! feof($file)){
+		$val = parseToCompare(fgetcsv($file)[$pos]);
+		if($val==$string) {
+			return true;
+		}
+	}
+	return false;
+}
+
+// modify string so that it can match even with the following differences : whitespaces, dot, dash
+// in csv -> will keep first occurence
+// @todo match entries when [as ...] is defined
+function parseToCompare($s){
+	$res = preg_replace("/\s/", "", $s);
+	$res = preg_replace("/\-/", "", $res);
+	$res = preg_replace("/\./", "", $res);
+	$res = strtolower($res);
+	return $res;
+}
+
+
+// delete from $s all content between () or []
+function parseComments($s) {
+	$res = preg_replace("/\[.*\]/", "", $s);
+	$res = preg_replace("/\(.*\)/", "", $res);
+
+
+	$res = trim($res);
+	return $res;
 }
