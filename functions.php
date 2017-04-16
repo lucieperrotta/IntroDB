@@ -1,6 +1,6 @@
 <?php 
 
-function parseNullValue($s) {
+/*function parseNullValue($s) {
 
 	if(empty($s)) return true;
 
@@ -8,6 +8,28 @@ function parseNullValue($s) {
 	foreach($nullValues as $n) {
 		$res = strpos($s, $n);
 		if ($res !== false) {
+			return true;
+		}
+	}
+
+	return false;
+}*/
+
+/*var_dump(parseNullValue("?"));
+var_dump(parseNullValue("dwed?ded"));
+var_dump(parseNullValue("NULL"));
+var_dump(parseNullValue("[none]"));
+var_dump(parseNullValue("[nn]"));*/
+
+function parseNullValue($s) {
+
+	if(empty($s)) return true;
+
+	$nullValues = ['/NULL/', '/\[nn\]/', '/\[none\]/','/\?(?![a-z])/', '/none/'];
+	foreach($nullValues as $n) {
+		$matches;
+		preg_match ($n, $s, $matches, PREG_OFFSET_CAPTURE);
+		if (sizeof($matches) != 0) {
 			return true;
 		}
 	}
@@ -108,11 +130,14 @@ function isInCsv($file, $s, $pos){
 		return false;
 	}
 
+	$i = 0;
+
 	while(! feof($file)){
 		$val = fgetcsv($file);
 		if($val[$pos]==$s) {
-			return true;
+			return $i;
 		}
+		$i++;
 	}
 	return false;
 }

@@ -8,7 +8,12 @@ J'ai créé des scripts qui écrivent des queries INSERT (ajouter dans la db) da
 
 Avec ça on peut avoir la base des bdd. Ce qu'il faut faire maintenant c'est :
 - parser :  TIM
-	- modifier les datas pour qu'elles rentrent dans le bon type. Je pense à toutes les dates qui devraient être date à la place de varchar -> donc il faudrait une fonction qui get l'année d'une string --> j'ai tenté d'aussi get le jour quand il était dispo mais c'était de la grosse merde... Je crois qu'il va falloir faire beaucoup d'assumptions pour ça, parce que j'ai vu des 1870's, 1890-03-02 ou 1830 ou July 18 1987... Est-ce qu'on garde que l'année à chaque fois ou on essaie d'avoir aussi les jours quand c'est dispo ? (sachant que je crois qu'on est obligé d'avoir une date du style aaaa-mm-jj)
+	- modifier les datas pour qu'elles rentrent dans le bon type. Je pense à toutes les dates qui devraient être date à la place de varchar -> donc il faudrait une fonction qui get l'année d'une string --> j'ai tenté d'aussi get le jour quand il était dispo mais c'était de la grosse merde... Je crois qu'il va falloir faire beaucoup d'assumptions pour ça, parce que j'ai vu des 1870's, 1890-03-02 ou 1830 ou July 18 1987... 
+	Essaie de get que l'année chaque fois, ce serait le minimum. Genre :
+	“1870’s” become “1870”
+	“July 10 1870” become “1870”
+	“1870-07-10” become “1870”
+	Ensuite tu peux essayer de garder le jour et le mois, mais à la limite ce n'est pas nécessaire.
 	- j'ai déjà réglé le cas des null values, mais si vous trouvez des entrées inutiles, ce serait bien de les passer à null aussi (juste modifier ma fonction).
 
 	A noter qu'il n'y a pas besoin d'utiliser les data dans la base de données pour parser, utiliser les csv suffit. C'est juste qu'on n'a pas les types du coup y'a moins de contrainte, et il y a moins de lignes absurdes aussi...

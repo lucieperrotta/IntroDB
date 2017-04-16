@@ -7,8 +7,6 @@ $file = fopen("comics/issue.csv","r");
 $mysql = fopen("issue.sql", "w"); // write into this sql to import 
 /*
 date marche pas -> besoin que year
-notes contains double quotes....... grep
-int are not defined
 
 rating and number varchar
 isbn, valid isbn become varchar
