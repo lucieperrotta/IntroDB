@@ -2,8 +2,8 @@
 include("db.php");
 include("functions.php");
 
-$file = fopen("comics/website.csv","r");
-$mysql = fopen("website.sql", "w"); // write into this sql to import 
+$file = fopen("comics/genre.csv","r");
+$mysql = fopen("genre.sql", "w"); // write into this sql to import 
 
 
 /*
@@ -12,10 +12,8 @@ year -> date
 */
 
 $min = 0;
-$max = 100000;
+$max = 500;
 $i = 0;
-
-//var_dump(fgetcsv($file));
 
 /*
   0 => string 'id' (length=2)
@@ -23,32 +21,35 @@ $i = 0;
   2 => string 'name' (length=4)
 */
 
+  fwrite($mysql, "INSERT INTO genre(id,name) VALUES");
+
   while(! feof($file)){
-    $i++;
-    $val = fgetcsv($file);
+  	$i++;
+  	$val = fgetcsv($file);
 
-    if($i > $min){
+  	if($i > $min){
 
-      $id = getInt($val[0]);
-      $url = parseDoubleQuote($val[1]);
+  		$id = getInt($val[0]);
+  		$name = parseDoubleQuote($val[1]);
 
-      $query = 'INSERT INTO website(id,url) VALUES(
-      '.$id.', '.$url.'
-      );';
+      if(empty($id)) continue;
 
-    //var_dump($query);
+  		$query = '('.$id.','.$name.' ),
+      ';
 
-      //print_r($query);
+  	//var_dump($query);
+
+  		//print_r($query);
       fwrite($mysql,$query);
 
-      $s1 = $con->query($query);
-      /*var_dump($s1);*/
+  		$s1 = $con->query($query);
+  		/*var_dump($s1);*/
 
-      if($i==$max){
-        break;
-      }
-    }
-    
+  		if($i==$max){
+  			break;
+  		}
+  	}
+  	
   }
 //var_dump($s1->fetchAll(PDO::FETCH_ASSOC));
 

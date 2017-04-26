@@ -12,7 +12,7 @@ synospsis -> text
 */
 
 $min = 0;
-$max = 1;
+$max = 100;
 $i = 0;
 
 var_dump(fgetcsv($file));
@@ -78,9 +78,9 @@ var_dump(fgetcsv($file));
 
   	//var_dump($query);
 
-  		print_r($query);
+      fwrite($mysql,$query);
 
-  		$s1 = $con->query($query);
+  		//$s1 = $con->query($query);
   		/*var_dump($s1);*/
 
   		if($i==$max){

@@ -2,8 +2,8 @@
 include("db.php");
 include("functions.php");
 
-$file = fopen("comics/artist.csv","r");
-$mysql = fopen("artist.sql", "w"); // write into this sql to import 
+$file = fopen("comics/country.csv","r");
+$mysql = fopen("country.sql", "w"); // write into this sql to import 
 
 
 /*
@@ -15,40 +15,41 @@ $min = 0;
 $max = 500;
 $i = 0;
 
+var_dump(fgetcsv($file));
+
 /*
   0 => string 'id' (length=2)
   1 => string 'code' (length=4)
   2 => string 'name' (length=4)
-
-  @TODO unknown ?
 */
 
   while(! feof($file)){
-    $i++;
-    $val = fgetcsv($file);
+  	$i++;
+  	$val = fgetcsv($file);
 
-    if($i > $min){
+  	if($i > $min){
 
-      $id = getInt($val[0]);
-      $name = parseDoubleQuote($val[1]);
+  		$id = getInt($val[0]);
+  		$code = parseDoubleQuote($val[1]);
+  		$name = parseDoubleQuote($val[2]);
 
-      $query = 'INSERT INTO artist(id,name) VALUES(
-      '.$id.','.$name.'
-      );';
+  		$query = 'INSERT INTO country(id,code,name) VALUES(
+      '.$id.', '.$code.', '.$name.'
+  		);';
 
-    //var_dump($query);
+  	//var_dump($query);
 
-      //print_r($query);
+  		//print_r($query);
       fwrite($mysql,$query);
 
-      $s1 = $con->query($query);
-      /*var_dump($s1);*/
+  		$s1 = $con->query($query);
+  		/*var_dump($s1);*/
 
-      if($i==$max){
-        break;
-      }
-    }
-    
+  		if($i==$max){
+  			break;
+  		}
+  	}
+  	
   }
 //var_dump($s1->fetchAll(PDO::FETCH_ASSOC));
 

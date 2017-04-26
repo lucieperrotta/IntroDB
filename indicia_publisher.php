@@ -58,7 +58,8 @@ var_dump(fgetcsv($file));
 
   	//var_dump($query);
 
-  		print_r($query);
+  		//print_r($query);
+      fwrite($mysql,$query);
 
   		$s1 = $con->query($query);
   		/*var_dump($s1);*/

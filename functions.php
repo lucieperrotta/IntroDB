@@ -23,7 +23,9 @@ var_dump(parseNullValue("[nn]"));*/
 
 function parseNullValue($s) {
 
-	if(empty($s)) return true;
+	if(empty($s) && $s!='0') return true;
+
+	if($s==0) return false; // handle 0 values like id 
 
 	$nullValues = ['/NULL/', '/\[nn\]/', '/\[none\]/','/\?(?![a-z])/', '/none/'];
 	foreach($nullValues as $n) {
@@ -130,19 +132,17 @@ function isInCsv($file, $s, $pos){
 		return false;
 	}
 
-	$i = 0;
-
 	while(! feof($file)){
 		$val = fgetcsv($file);
 		if($val[$pos]==$s) {
-			return $i;
+			return $val[0];
 		}
-		$i++;
 	}
 	return false;
 }
 
 // return true if $s in contained in $csv file (opened) (at position $pos), false otherwise
+// @TODO parse "?"
 function isInCsvName($file, $s, $pos){
 
 	rewind($file);

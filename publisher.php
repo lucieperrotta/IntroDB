@@ -11,8 +11,8 @@ website id ->> mettre dans table website -> remettre foreign key
 year -> date
 */
 
-$min = 4000;
-$max = 5000;
+$min = 0;
+$max = 500;
 $i = 0;
 
 var_dump(fgetcsv($file));
@@ -53,7 +53,8 @@ var_dump(fgetcsv($file));
 
   	//var_dump($query);
 
-  		print_r($query);
+  		//print_r($query);
+      fwrite($mysql,$query);
 
   		$s1 = $con->query($query);
   		/*var_dump($s1);*/

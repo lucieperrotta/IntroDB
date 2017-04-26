@@ -31,11 +31,12 @@ foreach ($files as $f => $pos) {
       if(!parseNullValue($url)){
         $index = isInCsv($csv, $url,1);
         $val[$pos] = $index;
-        
       }
 
-      var_dump($val);
+      //var_dump($val);
       $out .= implode(",",$val)."\n";
+
+      if($i>$max) break;
     }
 
   }
