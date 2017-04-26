@@ -1,4 +1,4 @@
--- a) not sure ??
+-- a) OK
 SELECT T.name
 FROM	(
 		SELECT 	B.name, 
@@ -15,7 +15,7 @@ FROM	(
 		) AS T
 ORDER BY T.bid
 
--- b)
+-- b) OK
 SELECT 	P.id, P.name
 FROM 	publisher P,
 		country C,
@@ -24,7 +24,7 @@ WHERE	C.name = 'Danemark' AND
 		S.country_id = C.id AND
 		S.publisher_id = P.id
 
--- c)
+-- c) OK
 SELECT	S.name
 FROM	series S,
 		country C,
@@ -40,10 +40,10 @@ FROM 	issue I,
 WHERE	I.publication_date >= 1990
 GROUP BY I.publication_date
 
--- e)
+-- e) almost OK (now returns all series by publisher, not by indicia)
 SELECT T.name, COUNT(*)
 FROM	(
-		SELECT	distinct (I.name, S.id)
+		SELECT	I.name
 		FROM	indicia_publisher I,
 				publisher P,
 				series S
@@ -53,10 +53,10 @@ FROM	(
 		) AS T
 GROUP BY T.name
 
--- f)
-SELECT	S.name
+-- f) OK
+SELECT	S.title
 FROM 	story S,
-		story_reprint R,
+		story_reprint R
 WHERE 	S.id = R.origin_id
 GROUP BY R.origin_id
 ORDER BY COUNT(R.origin_id)
@@ -79,14 +79,14 @@ WHERE	A.id = SC.artist_id AND
 		S.id = I.story_id
 
 -- h)
-SELECT	S.name
-FROM 	story S
+SELECT	S.title
+FROM 	story S,
 		character C, 
-		has_character HS
+		has_characters HS
 WHERE	0 =	(	SELECT COUNT(distinct R.origin_id)
 			 	FROM story_reprint R
 			 	WHERE S.id = R.origin_id
 			) AND
-		HS.character_id = C.id AND
+		HS.characters_id = C.id AND
 		HS.story_id = S.id AND
 		C.name LIKE '%Batman%'
