@@ -1,14 +1,19 @@
 -- a) not sure ??
-SELECT 	B.name
-FROM 	brand_group B,
-		indicia_publisher I,
-		publisher P,
-		country C
-WHERE	C.name = 'Belgium' AND
-		C.id = I.country_id AND
-		I.publisher_id = P.id AND
-		P.id = B.publisher_id
-ORDER BY COUNT(distinct I.id)
+SELECT T.name
+FROM	(
+		SELECT 	B.name, 
+				COUNT(*) AS bid
+		FROM 	brand_group B,
+				indicia_publisher I,
+				publisher P,
+				country C
+		WHERE	C.name = 'Belgium' AND
+				C.id = I.country_id AND
+				I.publisher_id = P.id AND
+				P.id = B.publisher_id
+		GROUP BY B.name
+		) AS T
+ORDER BY T.bid
 
 -- b)
 SELECT 	P.id, P.name
@@ -30,20 +35,23 @@ WHERE	T.name = 'magazine' AND
 		C.name = "Switzerland"
 
 -- d) publication_date must be year only!!!
-SELECT 	I.publication_date,
-		COUNT(distinct I.id)
+SELECT 	COUNT(*)
 FROM 	issue I,
+WHERE	I.publication_date >= 1990
 GROUP BY I.publication_date
 
 -- e)
-SELECT	I.name,
-		COUNT (S.id)
-FROM	indicia_publisher I,
-		publisher P,
-		series S
-WHERE	I.publisher_id = P.id AND
-		S.publisher_id = P.id AND
-		I.name LIKE '%DC comics%'
+SELECT T.name, COUNT(*)
+FROM	(
+		SELECT	distinct (I.name, S.id)
+		FROM	indicia_publisher I,
+				publisher P,
+				series S
+		WHERE	I.publisher_id = P.id AND
+				S.publisher_id = P.id AND
+				I.name LIKE '%DC__omics%'
+		) AS T
+GROUP BY T.name
 
 -- f)
 SELECT	S.name
@@ -73,13 +81,12 @@ WHERE	A.id = SC.artist_id AND
 -- h)
 SELECT	S.name
 FROM 	story S
+		character C, 
+		has_character HS
 WHERE	0 =	(	SELECT COUNT(distinct R.origin_id)
 			 	FROM story_reprint R
 			 	WHERE S.id = R.origin_id
 			) AND
-		0 =	(	SELECT COUNT(distinct HS.story_id)
-			 	FROM character C, has_character HS
-			 	WHERE HS.character_id = C.id AND
-			 	HS.story_id = S.id AND
-			 	C.name = 'Batman'
-			)
+		HS.character_id = C.id AND
+		HS.story_id = S.id AND
+		C.name LIKE '%Batman%'
