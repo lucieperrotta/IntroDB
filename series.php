@@ -10,8 +10,8 @@ $mysql = fopen("series.sql", "w"); // write into this sql to import
 date marche pas -> besoin que year
 */
 
-$min = 10000;
-$max = 11000;
+$min = 0;
+$max = 100;
 $i = 0;
 
 var_dump(fgetcsv($file));
@@ -84,7 +84,8 @@ var_dump(fgetcsv($file));
 
   	//var_dump($query);
 
-  		print_r($query);
+  		//print_r($query);
+      fwrite($mysql,$query);
 
   		$s1 = $con->query($query);
   		/*var_dump($s1);*/

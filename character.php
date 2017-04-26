@@ -2,8 +2,8 @@
 include("db.php");
 include("functions.php");
 
-$file = fopen("comics/website.csv","r");
-$mysql = fopen("website.sql", "w"); // write into this sql to import 
+$file = fopen("comics/character.csv","r");
+$mysql = fopen("character.sql", "w"); // write into this sql to import 
 
 
 /*
@@ -12,15 +12,15 @@ year -> date
 */
 
 $min = 0;
-$max = 100000;
+$max = 100;
 $i = 0;
-
-//var_dump(fgetcsv($file));
 
 /*
   0 => string 'id' (length=2)
   1 => string 'code' (length=4)
   2 => string 'name' (length=4)
+
+  @TODO unknown ?
 */
 
   while(! feof($file)){
@@ -30,11 +30,11 @@ $i = 0;
     if($i > $min){
 
       $id = getInt($val[0]);
-      $url = parseDoubleQuote($val[1]);
+      $name = parseDoubleQuote($val[1]);
 
-      $query = 'INSERT INTO website(id,url) VALUES(
-      '.$id.', '.$url.'
-      );';
+      $query = 'INSERT INTO characters(id,name) VALUES(
+      '.$id.','.$name.');
+      ';
 
     //var_dump($query);
 
