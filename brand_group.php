@@ -13,7 +13,7 @@ year -> date
 */
 
 $min = 0;
-$max = 1000;
+$max = 3000;
 $i = 0;
 
 var_dump(fgetcsv($file));
@@ -35,13 +35,14 @@ var_dump(fgetcsv($file));
 
   		$id = getInt($val[0]);
   		$name = parseDoubleQuote($val[1]);
-  		$year_began = parseDoubleQuote($val[2]);
-  		$year_ended = parseDoubleQuote($val[3]);
+  		$year_began = getDateFromYear($val[2]);
+  		$year_ended = getDateFromYear($val[3]);
   		$notes = parseDoubleQuote($val[4]);
       //$url = parseDoubleQuote($val[5]);
       $url = getInt($val[5]);
 
   		$publisher_id = getInt($val[6]);
+
 
       if(empty($id)) continue;
 

@@ -15,8 +15,9 @@
 	return false;
 }*/
 
-/*var_dump(parseNullValue("?"));
-var_dump(parseNullValue("dwed?ded"));
+/*var_dump(parseNullValue("dwed?ded"));
+var_dump(parseNullValue(0));
+var_dump(parseNullValue("?"));
 var_dump(parseNullValue("NULL"));
 var_dump(parseNullValue("[none]"));
 var_dump(parseNullValue("[nn]"));*/
@@ -25,7 +26,7 @@ function parseNullValue($s) {
 
 	if(empty($s) && $s!='0') return true;
 
-	if($s==0) return false; // handle 0 values like id 
+	if(is_numeric($s)) return false; // handle 0 values like id 
 
 	$nullValues = ['/NULL/', '/\[nn\]/', '/\[none\]/','/\?(?![a-z])/', '/none/'];
 	foreach($nullValues as $n) {
@@ -90,7 +91,7 @@ function getDateFromYear($year) {
 	$month=1; $day=1;
 	$hour=0; $minute=0; $second=0;
 
-	return '"'.$res.'-'.$month.'-'.$day.'"';
+	return /*'"'.*/$res/*.'-'.$month.'-'.$day.'"'*/;
 }
 
 function getInt($i) {
@@ -154,9 +155,10 @@ function isInCsvName($file, $s, $pos){
 	$string = parseToCompare($s);
 
 	while(! feof($file)){
-		$val = parseToCompare(fgetcsv($file)[$pos]);
+		$content = fgetcsv($file);
+		$val = parseToCompare($content[$pos]);
 		if($val==$string) {
-			return true;
+			return $content[0];
 		}
 	}
 	return false;
