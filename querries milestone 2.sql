@@ -20,7 +20,7 @@ SELECT 	P.id, P.name
 FROM 	publisher P,
 		country C,
 		series S
-WHERE	C.name = 'Danemark' AND
+WHERE	C.name = 'Denmark' AND
 		S.country_id = C.id AND
 		S.publisher_id = P.id
 
