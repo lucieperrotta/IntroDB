@@ -11,13 +11,12 @@ date marche pas -> besoin que year
 rating and number varchar
 isbn, valid isbn become varchar
 
-date -> varchar
 */
 
 
 // to test and not print/insert all lines
 $min = 0;
-$max = 1000;
+$max = 3000;
 $i = 0;
 
 
@@ -59,7 +58,7 @@ while(! feof($file)){
 	  $number = parseDoubleQuote($val[1]);
 	  $series_id = getInt($val[2]);
 	  $indicia_publisher_id = getInt($val[3]);
-	  $publication_date = parseDoubleQuote($val[4]);
+	  $publication_date = getDateFromYear($val[4]);
 	  $price = parseDoubleQuote($val[5]);
 	  $page_count = getInt($val[6]);
 	  $indicia_frequency = parseDoubleQuote($val[7]);
@@ -69,7 +68,7 @@ while(! feof($file)){
 	  $valid_isbn = parseDoubleQuote($val[11]);
 	  $barcode = getInt($val[12]);
 	  $title = parseDoubleQuote($val[13]);
-	  $on_sale_date = parseDoubleQuote($val[14]);
+	  $on_sale_date = getDateFromYear($val[14]);
 	  $rating = parseDoubleQuote($val[15]);
 
 	// to debug, var_dump query or $con->query(query) -> should print a PDO object and not true or false (je crois que true veut dire qu'elle existe et false c'est qu'il y a une erreur) -> c/c une query dans sql dans phpmyadmin va te donner des indications sur pk ça fail

@@ -12,7 +12,7 @@ year -> date
 */
 
 $min = 0;
-$max = 1000;
+$max = 3000;
 $i = 0;
 
 var_dump(fgetcsv($file));
@@ -38,22 +38,19 @@ var_dump(fgetcsv($file));
   		$name = parseDoubleQuote($val[1]);
   		$publisher_id = getInt($val[2]);
   		$country_id = getInt($val[3]);
-      $year_began = parseDoubleQuote($val[4]);
-      $year_ended = parseDoubleQuote($val[5]);
+      $year_began = getDateFromYear($val[4]);
+      $year_ended = getDateFromYear($val[5]);
       $is_surrogate = getInt($val[6]);
       $notes = parseDoubleQuote($val[7]);
       $url = parseDoubleQuote($val[8]);
 
   		$query = 'INSERT INTO indicia_publisher(id, name, publisher_id, country_id, year_began, year_ended, is_surrogate, notes, website_id) VALUES(
-      '.$id.',
-      '.$name.',
+      '.$id.','.$name.',
       '.$publisher_id.',
       '.$country_id.',
-  		'.$year_began.',
-  		'.$year_ended.',
+  		'.$year_began.','.$year_ended.',
       '.$is_surrogate.',
-      '.$notes.',
-      '.$url.'
+      '.$notes.','.$url.'
   		);';
 
   	//var_dump($query);

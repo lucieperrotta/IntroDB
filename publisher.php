@@ -12,7 +12,7 @@ year -> date
 */
 
 $min = 0;
-$max = 500;
+$max = 2000;
 $i = 0;
 
 var_dump(fgetcsv($file));
@@ -36,19 +36,16 @@ var_dump(fgetcsv($file));
   		$id = getInt($val[0]);
   		$name = parseDoubleQuote($val[1]);
   		$country_id = getInt($val[2]);
-      $year_began = parseDoubleQuote($val[3]);
-      $year_ended = parseDoubleQuote($val[4]);
+      $year_began = getDateFromYear($val[3]);
+      $year_ended = getDateFromYear($val[4]);
       $notes = parseDoubleQuote($val[5]);
       $url = parseDoubleQuote($val[6]);
 
   		$query = 'INSERT INTO publisher(id, name, country_id, year_began, year_ended, notes, website_id) VALUES(
-      '.$id.',
-      '.$name.',
+      '.$id.','.$name.',
       '.$country_id.',
-  		'.$year_began.',
-  		'.$year_ended.',
-      '.$notes.',
-      '.$url.'
+  		'.$year_began.','.$year_ended.',
+      '.$notes.','.$url.'
   		);';
 
   	//var_dump($query);
