@@ -1,20 +1,5 @@
 <?php 
 
-/*function parseNullValue($s) {
-
-	if(empty($s)) return true;
-
-	$nullValues = ['NULL', '[nn]', '[none]','?', 'none'];
-	foreach($nullValues as $n) {
-		$res = strpos($s, $n);
-		if ($res !== false) {
-			return true;
-		}
-	}
-
-	return false;
-}*/
-
 /*var_dump(parseNullValue("dwed?ded"));
 var_dump(parseNullValue(0));
 var_dump(parseNullValue("?"));
@@ -26,7 +11,7 @@ function parseNullValue($s) {
 
 	if(empty($s) && $s!='0') return true;
 
-	if(is_numeric($s)) return false; // handle 0 values like id 
+	//if(is_numeric($s)) return false; // handle 0 values of id 
 
 	$nullValues = ['/NULL/', '/\[nn\]/', '/\[none\]/','/\?(?![a-z])/', '/none/'];
 	foreach($nullValues as $n) {
@@ -55,11 +40,14 @@ function parseNullValueWebsite($s) {
 	return false;
 }
 
+/*echo parseDoubleQuote('"fweihfekf"');
+echo parseDoubleQuote('\"fweihfekf\"');*/
+
 function parseDoubleQuote($s) {
 
 	if(parseNullValue($s)) return "NULL";
 
-	$res = str_replace('"', '\"', $s);
+	$res = str_replace('(?<!\\)\"', '\"', $s);
 	return '"'.$res.'"';
 }
 
@@ -121,11 +109,11 @@ function parseNames($s, $delimiter=";"){
 	for($i = 0; $i< sizeof($array); $i++){
 		$array[$i] = ltrim($array[$i]);
 	}
-	return $array;
+	return array_filter($array, function($value) { return $value !== ''; });
 }
 
 // return true if $s in contained in $csv file (opened) (at position $pos), false otherwise
-function isInCsv($file, $s, $pos){
+/*function isInCsv($file, $s, $pos){
 
 	rewind($file);
 
@@ -140,7 +128,7 @@ function isInCsv($file, $s, $pos){
 		}
 	}
 	return false;
-}
+}*/
 
 // return true if $s in contained in $csv file (opened) (at position $pos), false otherwise
 // @TODO parse "?"
@@ -164,7 +152,7 @@ function isInCsvName($file, $s, $pos){
 	return false;
 }
 
-// modify string so that it can match even with the following differences : whitespaces, dot, dash
+// modify string so that it can match even with the following differences : whitespaces, dot, dash (essentially for names)
 // in csv -> will keep first occurence
 // @todo match entries when [as ...] is defined
 function parseToCompare($s){

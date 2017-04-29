@@ -13,10 +13,10 @@ $index = getLastIndex($csv);
 
 $min = 0;
 $max = 1000;
-$i = 0;
 
 // get websites from all given files
 foreach ($files as $f => $pos) {
+  $i = 0;
   $file = fopen($f,"r");
   $out = implode(",",fgetcsv($file))."\n";
 
@@ -29,7 +29,7 @@ foreach ($files as $f => $pos) {
       $url = $val[$pos];
 
       if(!parseNullValue($url)){
-        $index = isInCsv($csv, $url,1);
+        $index = isInCsvName($csv, $url,1);
         $val[$pos] = $index;
       }
 

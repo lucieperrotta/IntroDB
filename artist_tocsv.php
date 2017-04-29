@@ -1,11 +1,7 @@
 <?php
 
-// @TODO BUG DUPLICATE ADDITION IN HAS_
-
 include("db.php");
 include("functions.php");
-
-unlink("comics/artist.csv");
 
 $csv = fopen("comics/artist.csv", "a+"); 
 $file = fopen("comics/story.csv","r");
@@ -21,7 +17,7 @@ echo "<h2>Don't forget to delete artist otherwise it is false !!</h2>";
 $index = getLastIndex($csv);
 
 $min = 0;
-$max = 100;
+$max = 20;
 $i = 0;
 
 var_dump(fgetcsv($file));
@@ -29,8 +25,7 @@ var_dump(fgetcsv($file));
 while(! feof($file)){
   $i++;
   $val = fgetcsv($file);
-
-  var_dump($val);
+  /*var_dump($val);*/
 
   if($i > $min){
 
@@ -48,7 +43,8 @@ while(! feof($file)){
       foreach ($script_array as $p){
         $p = parseComments($p);
         $exist = isInCsvName($csv, $p,1);
-        if($exist===false) {
+
+        if(!is_numeric($exist)) {
           // if author does not exist, add it in csv and has_
           $add = $index . ",".$p."\n";
           fwrite($csv, $add);
@@ -61,8 +57,7 @@ while(! feof($file)){
         }
         else {
           // author exist thus we can add in has_
-          $rightIndex = $index;
-          $query = $id.",".$rightIndex ."\n";
+          $query = $id.",".$exist ."\n";
           fwrite($has_script, $query);
         }
       }
@@ -73,7 +68,7 @@ while(! feof($file)){
       foreach ($pencils_array as $p){
         $p = parseComments($p);
         $exist = isInCsvName($csv, $p,1);
-        if($exist===false) {
+        if(!is_numeric($exist)) {
           $add = $index . ",".$p."\n";
           fwrite($csv, $add);
 
@@ -84,8 +79,7 @@ while(! feof($file)){
         }
         else {
           // author exist thus we can add in has_
-          $rightIndex = $index-1;
-          $query = $id.",".$rightIndex ."\n";
+          $query = $id.",".$exist ."\n";
           fwrite($has_pencils, $query);
         }
       }
@@ -96,7 +90,7 @@ while(! feof($file)){
       foreach ($inks_array as $p){
         $p = parseComments($p);
         $exist = isInCsvName($csv, $p,1);
-        if($exist===false) {
+        if(!is_numeric($exist)) {
           $add = $index . ",".$p."\n";
           fwrite($csv, $add);
 
@@ -107,8 +101,7 @@ while(! feof($file)){
         }
         else {
           // author exist thus we can add in has_
-          $rightIndex = $index-1;
-          $query = $id.",".$rightIndex ."\n";
+          $query = $id.",".$exist ."\n";
           fwrite($has_inks, $query);
         }
       }
@@ -119,7 +112,7 @@ while(! feof($file)){
       foreach ($colors_array as $p){
         $p = parseComments($p);
         $exist = isInCsvName($csv, $p,1);
-        if($exist===false) {
+        if(!is_numeric($exist)) {
           $add = $index . ",".$p."\n";
           fwrite($csv, $add);
 
@@ -130,8 +123,7 @@ while(! feof($file)){
         }
         else {
           // author exist thus we can add in has_
-          $rightIndex = $index-1;
-          $query = $id.",".$rightIndex ."\n";
+          $query = $id.",".$exist ."\n";
           fwrite($has_colors, $query);
         }
       }
@@ -142,7 +134,7 @@ while(! feof($file)){
       foreach ($letters_array as $p){
         $p = parseComments($p);
         $exist = isInCsvName($csv, $p,1);
-        if($exist===false) {
+        if(!is_numeric($exist)) {
           $add = $index . ",".$p."\n";
           fwrite($csv, $add);
 
@@ -153,12 +145,12 @@ while(! feof($file)){
         }
         else {
           // author exist thus we can add in has_
-          $rightIndex = $index-1;
-          $query = $id.",".$rightIndex ."\n";
+          $query = $id.",".$exist ."\n";
           fwrite($has_letters, $query);
         }
       }
     }
+
 
     if($i==$max){
       break;
@@ -166,14 +158,9 @@ while(! feof($file)){
   }
 
 }
-//var_dump($s1->fetchAll(PDO::FETCH_ASSOC));
 
-  /*$s = $con->query("SELECT * FROM story ORDER BY id DESC LIMIT 10");
-  $result = $s->fetchAll(PDO::FETCH_ASSOC);
-  var_dump($result);*/
-
-  fclose($file);
-  fclose($csv);
+fclose($file);
+fclose($csv);
 
 
-  ?> 
+?> 

@@ -4,14 +4,14 @@ include("functions.php");
 
 $file = fopen("comics/story.csv","r");
 $csv = fopen("comics/character.csv", "a+"); 
-$has_csv = fopen("comics/has_character.csv","w+");
+$has_csv = fopen("comics/has_featured_characters.csv","w+");
 
-echo "<h1>Characters</h1>";
+echo "<h1>Featuredd Character</h1>";
 
 $index = getLastIndex($csv);
 
 $min = 0;
-$max = 2000;
+$max = 200;
 $i = 0;
 
 /*
@@ -27,12 +27,12 @@ while(! feof($file)){
   if($i > $min){
 
     $id = getInt($val[0]);
-    $character = parseDoubleQuote($val[11]);
+    $features = parseDoubleQuote($val[2]);
     //$editing = parseDoubleQuote($val[9]);
     
-    if($character!="NULL"){
-      $character_array = parseNames($character);
-      foreach ($character_array as $p){
+    if($features!="NULL"){
+      $features_array = parseNames($features);
+      foreach ($features_array as $p){
         $p = parseComments($p);
         $exist = isInCsvName($csv, $p,1);
         if(!is_numeric($exist)) {
@@ -59,14 +59,8 @@ while(! feof($file)){
   }
 
 }
-//var_dump($s1->fetchAll(PDO::FETCH_ASSOC));
-
-  /*$s = $con->query("SELECT * FROM story ORDER BY id DESC LIMIT 10");
-  $result = $s->fetchAll(PDO::FETCH_ASSOC);
-  var_dump($result);*/
-
-  fclose($file);
-  fclose($csv);
+fclose($file);
+fclose($csv);
 
 
-  ?> 
+?> 

@@ -5,9 +5,9 @@ include("functions.php");
 $mysql = fopen("has_table.sql", "w"); // write into this sql to import 
 
 $min = 0;
-$max = 500;
+$max = 2500;
 
-
+ 
 // script
 $i = 0;
 $file = fopen("comics/has_script.csv","r");

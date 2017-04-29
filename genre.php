@@ -32,18 +32,14 @@ $i = 0;
   		$id = getInt($val[0]);
   		$name = parseDoubleQuote($val[1]);
 
-      if(empty($id)) continue;
+      if($id=='id') continue;
 
-  		$query = '('.$id.','.$name.' ),
+      $query = '('.$id.','.$name.' ),
       ';
 
-  	//var_dump($query);
-
-  		//print_r($query);
       fwrite($mysql,$query);
 
   		$s1 = $con->query($query);
-  		/*var_dump($s1);*/
 
   		if($i==$max){
   			break;

@@ -58,6 +58,9 @@ var_dump(fgetcsv($file));
   		$notes = parseDoubleQuote($val[14]);
   		$type_id = getInt($val[15]);
 
+      // don't process null title stories
+      if($title="NULL") continue;
+
       /*
       !!!!!!!!!!!!!!!
       PARSE script, pencils, inks, colors, characters, genre

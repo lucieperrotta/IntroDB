@@ -2,8 +2,8 @@
 include("db.php");
 include("functions.php");
 
-$file = fopen("comics/character.csv","r");
-$mysql = fopen("character.sql", "w"); // write into this sql to import 
+$file = fopen("comics/has_featured_characters.csv","r");
+$mysql = fopen("has_featured_characters.sql", "w"); // write into this sql to import 
 
 $min = 0;
 $max = 20;
@@ -18,7 +18,7 @@ while(! feof($file)){
     $id = getInt($val[0]);
     $name = parseDoubleQuote($val[1]);
 
-    $query = 'INSERT INTO characters(id,name) VALUES(
+    $query = 'INSERT INTO has_featured_characters(story_id,character_id) VALUES(
     '.$id.','.$name.');
     ';
 
