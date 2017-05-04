@@ -1,7 +1,7 @@
 <?php
 
 include("db.php");
-include("functions.php");
+include("functions.php"); 
 
 $csv = fopen("comics/artist.csv", "a+"); 
 $file = fopen("comics/story.csv","r");
@@ -10,14 +10,15 @@ $has_colors = fopen("comics/has_colors.csv", "w+");
 $has_pencils = fopen("comics/has_pencils.csv", "w+"); 
 $has_inks = fopen("comics/has_inks.csv", "w+"); 
 $has_letters = fopen("comics/has_letters.csv", "w+"); 
+$has_editing = fopen("comics/has_editing_story.csv", "w+"); 
 
 echo "<h1>Artists to csv</h1>";
-echo "<h2>Don't forget to delete artist otherwise it is false !!</h2>";
+echo "<h2>Don't forget to delete artist at the beginning otherwise it is false !!</h2>";
 
 $index = getLastIndex($csv);
 
-$min = 0;
-$max = 20;
+$min = 300;
+$max = 420;
 $i = 0;
 
 var_dump(fgetcsv($file));
@@ -25,7 +26,7 @@ var_dump(fgetcsv($file));
 while(! feof($file)){
   $i++;
   $val = fgetcsv($file);
-  /*var_dump($val);*/
+  var_dump($val);
 
   if($i > $min){
 
@@ -35,6 +36,7 @@ while(! feof($file)){
     $inks = parseDoubleQuote($val[6]);
     $colors = parseDoubleQuote($val[7]);
     $letters = parseDoubleQuote($val[8]);
+    $editing = parseDoubleQuote($val[9]);
 
     //$editing = parseDoubleQuote($val[9]);
     
@@ -147,6 +149,28 @@ while(! feof($file)){
           // author exist thus we can add in has_
           $query = $id.",".$exist ."\n";
           fwrite($has_letters, $query);
+        }
+      }
+    }
+
+    if($editing!="NULL"){
+      $editing_array = parseNames($editing);
+      foreach ($editing_array as $p){
+        $p = parseComments($p);
+        $exist = isInCsvName($csv, $p,1);
+        if(!is_numeric($exist)) {
+          $add = $index . ",".$p."\n";
+          fwrite($csv, $add);
+
+          $query = $id.",".$index ."\n";
+          fwrite($has_editing, $query);
+
+          $index++;
+        }
+        else {
+          // author exist thus we can add in has_
+          $query = $id.",".$exist ."\n";
+          fwrite($has_editing, $query);
         }
       }
     }

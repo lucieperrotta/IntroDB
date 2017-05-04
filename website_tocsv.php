@@ -13,9 +13,11 @@ $min = 0;
 $max = 10000000;
 $i = 0;
 
+
 // get websites from all given files
 foreach ($files as $f => $pos) {
   $file = fopen($f,"r");
+  $val = fgetcsv($file); // avoid url column name
 
   while(! feof($file)){
     $i++;
@@ -26,7 +28,7 @@ foreach ($files as $f => $pos) {
       $url = $val[$pos];
 
       // if the websie 
-      if(!parseNullValueWebsite($url)){
+      if(!parseNullValue($url)){
         if(isInCsv($csv, $url,1)===false) {
           $add = $index . ",".$url."\n";
           fwrite($csv, $add);

@@ -1,6 +1,7 @@
 <?php 
 
 /*var_dump(parseNullValue("dwed?ded"));
+var_dump(parseNullValue("hey None"));
 var_dump(parseNullValue(0));
 var_dump(parseNullValue("?"));
 var_dump(parseNullValue("NULL"));
@@ -14,11 +15,9 @@ function parseNullValue($s) {
 
 	//if(is_numeric($s)) return false; // handle 0 values of id 
 
-	$nullValues = ['/NULL/', '/\[nn\]/', '/\[none\]/','/\?(?![a-z])/', '/none/', '/(unknown)/'];
+	$nullValues = ['NULL', '[nn]', 'nn', 'none', '[none]','?', '(unknown)','None'];
 	foreach($nullValues as $n) {
-		$matches;
-		preg_match ($n, $s, $matches, PREG_OFFSET_CAPTURE);
-		if (sizeof($matches) != 0) {
+		if ($s === $n) {
 			return true;
 		}
 	}
@@ -26,29 +25,15 @@ function parseNullValue($s) {
 	return false;
 }
 
-function parseNullValueWebsite($s) {
-
-	if(empty($s)) return true;
-
-	$nullValues = ['NULL', '[nn]', '[none]','?', 'none', 'url']; // url comes from first line of csv
-	foreach($nullValues as $n) {
-		$res = strpos($s, $n);
-		if ($res !== false) {
-			return true;
-		}
-	}
-
-	return false;
-}
-
-/*echo parseDoubleQuote('"fweihfekf"');
+/*echo parseDoubleQuote('"fweihfekf"') . "<br/>";
 echo parseDoubleQuote('\"fweihfekf\"');*/
 
 function parseDoubleQuote($s) {
 
 	if(parseNullValue($s)) return "NULL";
 
-	$res = str_replace('(?<!\\)\"', '\"', $s);
+	$res = str_replace('"', '\"', $s);
+	$res = str_replace('\\\\"', '\"', $res);
 	return '"'.$res.'"';
 }
 

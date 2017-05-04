@@ -5,6 +5,8 @@ include("functions.php");
 
 $file = fopen("comics/issue.csv","r");
 $mysql = fopen("issue.sql", "w"); // write into this sql to import 
+$csv = fopen("comics/artist.csv", "a+");
+$has_editing = fopen("comics/has_editing_issue.csv", "w+");  
 /*
 date marche pas -> besoin que year
 
@@ -16,8 +18,9 @@ isbn, valid isbn become varchar
 
 // to test and not print/insert all lines
 $min = 0;
-$max = 3000;
+$max = 50;
 $i = 0;
+$index = getLastIndex($csv);
 
 
 // print first line to show columns
@@ -71,11 +74,34 @@ while(! feof($file)){
 	  $on_sale_date = getDateFromYear($val[14]);
 	  $rating = parseDoubleQuote($val[15]);
 
+
+    if($editing!="NULL"){
+      $editing_array = parseNames($editing);
+      foreach ($editing_array as $p){
+        $p = parseComments($p);
+        $exist = isInCsvName($csv, $p,1);
+        if(!is_numeric($exist)) {
+          $add = $index . ",".$p."\n";
+          fwrite($csv, $add);
+
+          $query = $id.",".$index ."\n";
+          fwrite($has_editing, $query);
+
+          $index++;
+        }
+        else {
+          // author exist thus we can add in has_
+          $query = $id.",".$exist ."\n";
+          fwrite($has_editing, $query);
+        }
+      }
+    }
+
 	// to debug, var_dump query or $con->query(query) -> should print a PDO object and not true or false (je crois que true veut dire qu'elle existe et false c'est qu'il y a une erreur) -> c/c une query dans sql dans phpmyadmin va te donner des indications sur pk ça fail
 
-	  $query = 'INSERT INTO issue(id, number, series_id, indicia_publisher_id, publication_date, price, page_count, indicia_frequency, editing, notes, isbn, valid_isbn, barcode,title, on_sale_date, rating) VALUES(
+	  $query = 'INSERT INTO issue(id, number, series_id, indicia_publisher_id, publication_date, price, page_count, indicia_frequency, notes, isbn, valid_isbn, barcode,title, on_sale_date, rating) VALUES(
 	  '.$id.','.$number.','.$series_id.','.$indicia_publisher_id.','.$publication_date.',
-	  '.$price.','.$page_count.','.$indicia_frequency.','.$editing.','.$notes.',
+	  '.$price.','.$page_count.','.$indicia_frequency.','.$notes.',
 	  '.$isbn.','.$valid_isbn.','.$barcode.','.$title.','.$on_sale_date.','.$rating.'
 	  );';
 

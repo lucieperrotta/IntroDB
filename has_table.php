@@ -139,4 +139,56 @@ while(! feof($file)){
 }
 fclose($file);
 
+
+// editing
+$i = 0;
+$file = fopen("comics/has_editing_story.csv","r");
+while(! feof($file)){
+  $i++;
+  $val = fgetcsv($file);
+
+  if($i > $min){
+    $s_id = getInt($val[0]);
+    $a_id = getInt($val[1]);
+
+    if(!is_numeric($s_id)) continue;
+
+    $query = '('.$s_id.','. $a_id.' );
+    ';
+    fwrite($mysql, "INSERT INTO has_editing_story(story_id,artist_id) VALUES");
+    fwrite($mysql,$query);
+
+    if($i==$max){
+      break;
+    }
+  }
+}
+fclose($file);
+
+
+// editing
+$i = 0;
+$file = fopen("comics/has_editing_issue.csv","r");
+while(! feof($file)){
+  $i++;
+  $val = fgetcsv($file);
+
+  if($i > $min){
+    $s_id = getInt($val[0]);
+    $a_id = getInt($val[1]);
+
+    if(!is_numeric($s_id)) continue;
+
+    $query = '('.$s_id.','. $a_id.' );
+    ';
+    fwrite($mysql, "INSERT INTO has_editing_issue(issue_id,artist_id) VALUES");
+    fwrite($mysql,$query);
+
+    if($i==$max){
+      break;
+    }
+  }
+}
+fclose($file);
+
 ?> 

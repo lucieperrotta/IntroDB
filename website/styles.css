@@ -4,7 +4,7 @@
 }
 
 body {
-	font-size: 10px;
+	font-size: 13px;
 	font-family:arial;
 
 }
@@ -19,6 +19,20 @@ a, a:active {
 
 h1 {
 	font-size: 3.5em;
+}
+
+table.table_content {
+	border:1px solid black;
+	width:80%;
+	margin:auto;
+}
+
+table.table_content td{
+	border:1px solid black;
+}
+
+table.table_content td.id{
+	font-weight: bold;
 }
 
 nav {
