@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <?php include("header.php"); ?>
+<?php include("../db.php"); ?>
 <body>
 
 	<?php include("navigation.php"); ?>
@@ -23,8 +24,16 @@
 				<form method="post" action="process_insert.php">
 					<fieldset>
 						<h2>Story</h2>
-						First name: <input type="text" name="FirstName" value="Mickey"><br>
-						Last name: <input type="text" name="LastName" value="Mouse"><br>
+						<input type="hidden" name="table" value="story">
+						Title: <input type="text" name="title" value="title"><br>
+						Features: <input type="text" name="features" value="features_test"><br>
+						Issue ID: <input type="text" name="issueId" value="1"><br>
+						Letters: <input type="text" name="letters" value="letters_test"><br>
+						Editing: <input type="text" name="editing" value="editing_test"><br>
+						Synopsis: <textarea type="text" name="synopsis" value="Synopsis">hey! </textarea><br>
+						Reprint notes: <input type="text" name="reprintNotes" value="sometextforreprintnotes"><br>
+						Notes: <input type="text" name="notes" value="notes"><br>
+						Type : <input type="text" name="type" value="type_test"><br>
 					</fieldset>
 					<br/>
 					<input type="submit" value="Submit">
@@ -53,3 +62,7 @@
 
 </script>
 </html>
+
+
+
+<?php include("error_handler.php"); ?>

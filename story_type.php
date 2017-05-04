@@ -34,29 +34,24 @@ var_dump(fgetcsv($file));
   		$id = getInt($val[0]);
   		$name = parseDoubleQuote($val[1]);
 
-  		$query = 'INSERT INTO story_type(id,name) VALUES(
-      '.$id.','.$name.'
-  		);';
+      if($name != "(backcovers) *do not use* / *please fix*") {
+        ïf($name != "(unknown)"){
 
-  	//var_dump($query);
+          $query = 'INSERT INTO story_type(id,name) VALUES(
+          '.$id.','.$name.'
+          );';
 
-  		//print_r($query);
-      fwrite($mysql,$query);
+          fwrite($mysql,$query);
 
-  		$s1 = $con->query($query);
-  		/*var_dump($s1);*/
+        }
+      }
 
-  		if($i==$max){
-  			break;
-  		}
-  	}
-  	
-  }
-//var_dump($s1->fetchAll(PDO::FETCH_ASSOC));
+      if($i==$max){
+       break;
+     }
+   }
 
-  /*$s = $con->query("SELECT * FROM indicia_publisher ORDER BY id DESC LIMIT 10");
-  $result = $s->fetchAll(PDO::FETCH_ASSOC);
-  var_dump($result);*/
+ }
 
-  fclose($file);
-  ?> 
+ fclose($file);
+ ?> 

@@ -60,6 +60,7 @@ var_dump(fgetcsv($file));
 
       // don't process null title stories
       if($title="NULL") continue;
+      if($type_id==3) $type_id = "NULL"; // backover do not use
 
       /*
       !!!!!!!!!!!!!!!

@@ -13,8 +13,28 @@ html {
 
 }
 
+a, a:active {
+	text-decoration: none;
+}
+
 h1 {
 	font-size: 3.5em;
+}
+
+nav {
+	font-size: 3em;
+}
+
+nav li {
+	display:inline-block;
+	margin:0 1%;
+	padding:5px;
+	background:lightgrey;
+}
+
+section {
+	font-size: 1.5em;
+	padding:1%;
 }
 
 #wrapperContent {
@@ -49,4 +69,27 @@ input[type=submit]:hover {
 
 #displayContent {
 	font-size: 1.3em;
+}
+
+/***********INSERT***********/
+#ongletsBox span {
+	font-size: 1.5em;
+	padding:5px;
+	margin:5px;
+	background-color: beige;
+}
+
+#displayBoxInsert {
+	background:rgba(0,0,0,0.1);
+
+}
+
+#displayBoxInsert div {
+	display:none;
+	font-size: 1.3em;
+}
+
+
+#displayBoxInsert div.active {
+	display:block;
 }

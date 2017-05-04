@@ -5,7 +5,8 @@ var_dump(parseNullValue(0));
 var_dump(parseNullValue("?"));
 var_dump(parseNullValue("NULL"));
 var_dump(parseNullValue("[none]"));
-var_dump(parseNullValue("[nn]"));*/
+var_dump(parseNullValue("[nn]"));
+var_dump(parseNullValue("(unknown)"));*/
 
 function parseNullValue($s) {
 
@@ -13,7 +14,7 @@ function parseNullValue($s) {
 
 	//if(is_numeric($s)) return false; // handle 0 values of id 
 
-	$nullValues = ['/NULL/', '/\[nn\]/', '/\[none\]/','/\?(?![a-z])/', '/none/'];
+	$nullValues = ['/NULL/', '/\[nn\]/', '/\[none\]/','/\?(?![a-z])/', '/none/', '/(unknown)/'];
 	foreach($nullValues as $n) {
 		$matches;
 		preg_match ($n, $s, $matches, PREG_OFFSET_CAPTURE);
