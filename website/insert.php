@@ -15,6 +15,8 @@
 			<span onclick="display(this)" value="publisher">Publisher</span>
 			<span onclick="display(this)" value="indicia_publisher">Indicia Publisher</span>
 			<span onclick="display(this)" value="country">Country</span>
+			<span onclick="display(this)" value="language">Language</span>
+			<span onclick="display(this)" value="brand_group">Brand Group</span>
 		</div>
 
 
@@ -140,6 +142,72 @@
 
 				</form>
 
+
+
+				<?php 
+				$s = $con->query("SELECT * FROM publisher ORDER BY id DESC LIMIT 3");
+				$result = $s->fetchAll(PDO::FETCH_ASSOC);
+
+				$text = '<table class="table_content">';
+				foreach ($result as $key => $value) {
+					$text .= '<tr>';
+					$text .= '<td class="id">'.$value["id"].'</td>';
+					$text .= '<td class="name">'.$value["name"].'</td>';
+					$text .= '<td class="country_id">'.$value["country_id"].'</td>';
+					$text .= '<td class="year_began">'.$value["year_began"].'</td>';
+					$text .= '<td class="year_ended">'.$value["year_ended"].'</td>';
+					$text .= '<td class="notes">'.$value["notes"].'</td>';
+					$text .= '<td class="website_id">'.$value["website_id"].'</td>';
+					$text .= '</tr>';
+				}
+				$text .= '</table>'; 
+
+				echo $text;
+
+				?>
+
+			</div>
+
+			<div class="content" id="brand_group">
+
+				<form method="post" action="process_insert_brand_group.php">
+					<fieldset>
+						<h2>Brand Group</h2>
+						Name: <input type="text" name="name" value="name"><br>
+						year began: <input type="text" name="year_began" value="1234"><br>
+						year ended: <input type="text" name="year_ended" value="1234"><br>
+						Notes: <input type="text" name="notes" value="notes"><br>
+						website: <input type="text" name="website" value="urlhttp//"><br>
+						Publisher ID: <input type="text" name="publisher_id" value="1"><br>
+					</fieldset>
+					<br/>
+					<input type="submit" value="Submit">
+
+				</form>
+
+
+				<?php 
+				$s = $con->query("SELECT * FROM brand_group ORDER BY id DESC LIMIT 3");
+				$result = $s->fetchAll(PDO::FETCH_ASSOC);
+
+				$text = '<table class="table_content">';
+				foreach ($result as $key => $value) {
+					$text .= '<tr>';
+					$text .= '<td class="id">'.$value["id"].'</td>';
+					$text .= '<td class="name">'.$value["name"].'</td>';
+					$text .= '<td class="year_began">'.$value["year_began"].'</td>';
+					$text .= '<td class="year_ended">'.$value["year_ended"].'</td>';
+					$text .= '<td class="notes">'.$value["notes"].'</td>';
+					$text .= '<td class="website">'.$value["website_id"].'</td>';
+					$text .= '<td class="publisher_id">'.$value["publisher_id"].'</td>';
+					$text .= '</tr>';
+				}
+				$text .= '</table>'; 
+
+				echo $text;
+
+				?>
+
 			</div>
 
 			<div class="content" id="country">
@@ -157,6 +225,39 @@
 
 				<?php 
 				$s = $con->query("SELECT * FROM country ORDER BY id DESC LIMIT 3");
+				$result = $s->fetchAll(PDO::FETCH_ASSOC);
+
+				$text = '<table class="table_content">';
+				foreach ($result as $key => $value) {
+					$text .= '<tr>';
+					$text .= '<td class="id">'.$value["id"].'</td>';
+					$text .= '<td class="name">'.$value["name"].'</td>';
+					$text .= '<td class="code">'.$value["code"].'</td>';
+					$text .= '</tr>';
+				}
+				$text .= '</table>'; 
+
+				echo $text;
+
+				?>
+
+			</div>
+
+			<div class="content" id="language">
+				<form method="post" action="process_insert_language.php">
+					<fieldset>
+						<h2>Language</h2>
+						Name: <input type="text" name="name" value="name"><br>
+						Code: <input type="text" name="code" value="ch"><br>
+					</fieldset>
+					<br/>
+					<input type="submit" value="Submit">
+				</form>
+
+
+
+				<?php 
+				$s = $con->query("SELECT * FROM language ORDER BY id DESC LIMIT 3");
 				$result = $s->fetchAll(PDO::FETCH_ASSOC);
 
 				$text = '<table class="table_content">';
@@ -216,4 +317,4 @@ foreach ($result as $key => $value) {
 ?>
 
 
-	<?php include("error_handler.php"); ?>
+<?php include("error_handler.php"); ?>

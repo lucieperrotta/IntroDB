@@ -7,10 +7,15 @@ $code = parseDoubleQuote(htmlspecialchars($_POST["code"]));
 $name= parseDoubleQuote(htmlspecialchars($_POST["name"]));
 
 	// ------------ CHECK DUPLICATA
-$s = $con->query("SELECT id FROM country WHERE name='".$name."'"); // @todo compare better
+$s = $con->query("SELECT id FROM country WHERE name=".$name); // @todo compare better
 $name_id = $s->fetchAll(PDO::FETCH_ASSOC);
 if(!empty($name_id)) {
-	header("Location: insert.php?currenttable=country&code=error&cause=duplicata&on=name"); exit();
+	header("Location: insert.php?currenttable=country&code=error&cause=duplicata&on=code"); exit();
+}
+$s = $con->query("SELECT id FROM country WHERE code=".$code); // @todo compare better
+$code_id = $s->fetchAll(PDO::FETCH_ASSOC);
+if(!empty($code_id)) {
+	header("Location: insert.php?currenttable=country&code=error&cause=duplicata&on=code"); exit();
 }
 
 		// ID

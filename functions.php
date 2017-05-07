@@ -37,12 +37,13 @@ function parseDoubleQuote($s) {
 	return '"'.$res.'"';
 }
 
-/*
-echo(getDateFromYear("[du borbel 1970's]]"));
-echo(getDateFromYear("1897"));
-echo(getDateFromYear("July 17 1897")); //1897 too early for strtotime -> keep full date ?
-echo(getDateFromYear("1898-11-05")); //1897 too early -> keep full date ?
-*/
+
+/*echo(getDateFromYear("[du borbel 1970's]]")."<br/>");
+echo(getDateFromYear("1897")."<br/>");
+echo(getDateFromYear("July 17 1897")."<br/>"); //1897 too early for strtotime -> keep full date ?
+echo(getDateFromYear("1898-11-05")."<br/>"); //1897 too early -> keep full date ??
+echo(getDateFromYear("189811-05")."<br/>"); //1897 too early -> keep full date ?*/
+
 
 function getDateFromYear($year) {
 
@@ -58,14 +59,14 @@ function getDateFromYear($year) {
 
 	for ($i = 0; $i < sizeof($res1); $i++) {
 		if(strlen($res1[$i])==4) {
-			$res = $res1[$i];
+			return $res;
 		}
 	}
 
 	$month=1; $day=1;
 	$hour=0; $minute=0; $second=0;
 
-	return /*'"'.*/$res/*.'-'.$month.'-'.$day.'"'*/;
+	return "error";
 }
 
 function getInt($i) {
