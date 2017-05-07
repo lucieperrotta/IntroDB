@@ -1,4 +1,5 @@
 <?php 
+include("../db.php");
 
 var_dump($_POST);
 
@@ -19,4 +20,4 @@ else {
 
 
 
-header("Location: index.php");
+//header("Location: index.php");

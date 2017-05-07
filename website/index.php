@@ -1,12 +1,11 @@
  <!DOCTYPE html>
  <html>
- <head>
- 	<meta charset="UTF-8">
- 	<title>Grand comics</title>
- 	<link rel="stylesheet" type="text/css" href="styles.css">
- </head>
+<?php include("header.php"); ?>
+<?php include("../db.php"); ?>
 
  <body>
+
+ <?php include("navigation.php"); ?>
  	<div id="wrapperContent">
  		<h1>Grand comics</h1>
 

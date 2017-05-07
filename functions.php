@@ -1,11 +1,13 @@
 <?php 
 
 /*var_dump(parseNullValue("dwed?ded"));
+var_dump(parseNullValue("hey None"));
 var_dump(parseNullValue(0));
 var_dump(parseNullValue("?"));
 var_dump(parseNullValue("NULL"));
 var_dump(parseNullValue("[none]"));
-var_dump(parseNullValue("[nn]"));*/
+var_dump(parseNullValue("[nn]"));
+var_dump(parseNullValue("(unknown)"));*/
 
 function parseNullValue($s) {
 
@@ -13,11 +15,9 @@ function parseNullValue($s) {
 
 	//if(is_numeric($s)) return false; // handle 0 values of id 
 
-	$nullValues = ['/NULL/', '/\[nn\]/', '/\[none\]/','/\?(?![a-z])/', '/none/'];
+	$nullValues = ['NULL', '[nn]', 'nn', 'none', '[none]','?', '(unknown)','None'];
 	foreach($nullValues as $n) {
-		$matches;
-		preg_match ($n, $s, $matches, PREG_OFFSET_CAPTURE);
-		if (sizeof($matches) != 0) {
+		if ($s === $n) {
 			return true;
 		}
 	}
@@ -25,38 +25,25 @@ function parseNullValue($s) {
 	return false;
 }
 
-function parseNullValueWebsite($s) {
-
-	if(empty($s)) return true;
-
-	$nullValues = ['NULL', '[nn]', '[none]','?', 'none', 'url']; // url comes from first line of csv
-	foreach($nullValues as $n) {
-		$res = strpos($s, $n);
-		if ($res !== false) {
-			return true;
-		}
-	}
-
-	return false;
-}
-
-/*echo parseDoubleQuote('"fweihfekf"');
+/*echo parseDoubleQuote('"fweihfekf"') . "<br/>";
 echo parseDoubleQuote('\"fweihfekf\"');*/
 
 function parseDoubleQuote($s) {
 
 	if(parseNullValue($s)) return "NULL";
 
-	$res = str_replace('(?<!\\)\"', '\"', $s);
+	$res = str_replace('"', '\"', $s);
+	$res = str_replace('\\\\"', '\"', $res);
 	return '"'.$res.'"';
 }
 
-/*
-echo(getDateFromYear("[du borbel 1970's]]"));
-echo(getDateFromYear("1897"));
-echo(getDateFromYear("July 17 1897")); //1897 too early for strtotime -> keep full date ?
-echo(getDateFromYear("1898-11-05")); //1897 too early -> keep full date ?
-*/
+
+/*echo(getDateFromYear("[du borbel 1970's]]")."<br/>");
+echo(getDateFromYear("1897")."<br/>");
+echo(getDateFromYear("July 17 1897")."<br/>"); //1897 too early for strtotime -> keep full date ?
+echo(getDateFromYear("1898-11-05")."<br/>"); //1897 too early -> keep full date ??
+echo(getDateFromYear("189811-05")."<br/>"); //1897 too early -> keep full date ?*/
+
 
 function getDateFromYear($year) {
 
@@ -72,14 +59,14 @@ function getDateFromYear($year) {
 
 	for ($i = 0; $i < sizeof($res1); $i++) {
 		if(strlen($res1[$i])==4) {
-			$res = $res1[$i];
+			return $res;
 		}
 	}
 
 	$month=1; $day=1;
 	$hour=0; $minute=0; $second=0;
 
-	return /*'"'.*/$res/*.'-'.$month.'-'.$day.'"'*/;
+	return "error";
 }
 
 function getInt($i) {

@@ -4,7 +4,7 @@
 }
 
 body {
-	font-size: 10px;
+	font-size: 13px;
 	font-family:arial;
 
 }
@@ -13,8 +13,42 @@ html {
 
 }
 
+a, a:active {
+	text-decoration: none;
+}
+
 h1 {
 	font-size: 3.5em;
+}
+
+table.table_content {
+	border:1px solid black;
+	width:80%;
+	margin:auto;
+}
+
+table.table_content td{
+	border:1px solid black;
+}
+
+table.table_content td.id{
+	font-weight: bold;
+}
+
+nav {
+	font-size: 3em;
+}
+
+nav li {
+	display:inline-block;
+	margin:0 1%;
+	padding:5px;
+	background:lightgrey;
+}
+
+section {
+	font-size: 1.5em;
+	padding:1%;
 }
 
 #wrapperContent {
@@ -49,4 +83,27 @@ input[type=submit]:hover {
 
 #displayContent {
 	font-size: 1.3em;
+}
+
+/***********INSERT***********/
+#ongletsBox span {
+	font-size: 1.5em;
+	padding:5px;
+	margin:5px;
+	background-color: beige;
+}
+
+#displayBoxInsert {
+	background:rgba(0,0,0,0.1);
+
+}
+
+#displayBoxInsert div {
+	display:none;
+	font-size: 1.3em;
+}
+
+
+#displayBoxInsert div.active {
+	display:block;
 }
