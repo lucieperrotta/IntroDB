@@ -17,7 +17,7 @@ if($name=="NULL") {
 	exit();
 }
 		// check no duplicata
-$s = $con->query("SELECT id FROM publisher WHERE name='".$name."'"); // @todo compare better
+$s = $con->query("SELECT id FROM publisher WHERE name=".$name); // @todo compare better
 $name_id = $s->fetchAll(PDO::FETCH_ASSOC);
 if(!empty($name_id)) {
 	header("Location: insert.php?currenttable=publisher&code=error&cause=duplicata&on=name"); exit();

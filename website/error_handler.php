@@ -16,7 +16,7 @@ if(isset($_GET["code"])) {
 				echo " because does not exist";
 			}
 			else if($cause=="notnumber") {
-				echo " because is not a number";
+				echo " because is not a valid number";
 			}
 		}
 	}
