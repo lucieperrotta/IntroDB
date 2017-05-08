@@ -1,6 +1,6 @@
 TODO LIST
 
-ER (draw.io)
+ER (draw.io) TIM
 Modifier les flèches comme il l'a dit dans le pdf. Comme on doit rendre cette partie là aussi...
 
 Database
