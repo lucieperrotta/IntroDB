@@ -11,6 +11,7 @@
 
 		<div id="ongletsBox">
 			<span onclick="display(this)" value="story">Story</span>
+			<span onclick="display(this)" value="series">Series</span>
 			<span onclick="display(this)" value="issue">Issue</span>
 			<span onclick="display(this)" value="publisher">Publisher</span>
 			<span onclick="display(this)" value="indicia_publisher">Indicia Publisher</span>
@@ -42,6 +43,35 @@
 						Reprint notes: <input type="text" name="reprintNotes" value="sometextforreprintnotes"><br>
 						Notes: <input type="text" name="notes" value="notes"><br>
 						Type : <input type="text" name="type" value="type_test"><br>
+					</fieldset>
+					<br/>
+					<input type="submit" value="Submit">
+				</form>
+
+			</div>
+
+			<div class="content" id="series">
+
+				<form method="post" action="process_insert_issue.php">
+					<fieldset>
+						<h2>Story</h2>
+						Name: <input type="text" name="name" value="name"><br>
+						Format: <input type="text" name="format" value="format"><br>
+						year began: <input type="text" name="year_began" value="1234"><br>
+						year ended: <input type="text" name="year_ended" value="1234"><br>
+						Publication dates: <input type="text" name="publication_date" value="1wefio"><br>
+						First issue ID: <input type="text" name="first_issue_id" value="1"><br>
+						Last issue ID: <input type="text" name="last_issue_id" value="1"><br>
+						Publisher ID: <input type="text" name="publisher_id" value="2"><br>
+						Country ID: <input type="text" name="country_id" value="1"><br>
+						Language ID: <input type="text" name="language_id" value="1"><br>
+						notes: <input type="text" name="notes" value="wefjwpfo"><br>
+						Colors: <input type="text" name="colors" value="color_test"><br>
+						dimensions: <input type="text" name="dimensions" value="dimensions"><br>
+						paper stock: <input type="text" name="paper_stock" value="paperstock"><br>
+						binding: <textarea type="text" name="binding" value="Synopsis">hey! </textarea><br>
+						publishing format: <input type="text" name="publishing_format" value="sometextforreprintnotes"><br>
+						publication type ID: <input type="text" name="publication_type_id" value="1"><br>
 					</fieldset>
 					<br/>
 					<input type="submit" value="Submit">
@@ -306,8 +336,11 @@
 </script>
 </html>
 
+
+<?php include("error_handler.php"); ?>
+
 <?php 
-$s = $con->query("SELECT * FROM publisher ORDER BY id DESC LIMIT 3");
+$s = $con->query("SELECT * FROM issue ORDER BY id DESC LIMIT 3");
 $result = $s->fetchAll(PDO::FETCH_ASSOC);
 
 $text = '<table class="table_content">';
@@ -316,5 +349,3 @@ foreach ($result as $key => $value) {
 }
 ?>
 
-
-<?php include("error_handler.php"); ?>

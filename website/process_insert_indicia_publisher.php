@@ -21,8 +21,8 @@ checkDateFromForm($year_ended,"year_ended",$table);
 checkPrimaryKey($name,"name",$table,$con);
 
 // -------------HAVE TO EXIST
-checkForeignKey($publisher_id, "publisher", "publisher_id", $table, $con);
-checkForeignKey($country_id, "country","country_id",$table,$con);
+checkForeignKeyNotNull($publisher_id, "publisher", "publisher_id", $table, $con);
+checkForeignKeyNotNull($country_id, "country","country_id",$table,$con);
 
 
 // -------- GET NEEDED ID

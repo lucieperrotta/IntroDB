@@ -18,6 +18,9 @@ if(isset($_GET["code"])) {
 			else if($cause=="notnumber") {
 				echo " because is not a valid number";
 			}
+			else if ($cause=="toolong"){
+				echo " because is too long";
+			}
 		}
 	}
 	echo "</div>";
