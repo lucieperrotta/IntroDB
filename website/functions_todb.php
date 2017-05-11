@@ -54,7 +54,6 @@ function checkForeignKeyNotNull($s, $foreignTable, $on, $table, $con){
 }
 
 function checkForeignKey($s, $foreignTable, $on, $table, $con){
-
 	if($s=="NULL") return;
 	checkForeignKeyNotNull($s, $foreignTable, $on, $table, $con);
 }
@@ -67,7 +66,7 @@ function checkIsNullOrInt($s, $on, $table){
 
 function checkDateFromForm($s, $on, $table){
 	if($s=="NULL") return;
-	checkDateFromForm($s,$on,$table);
+	checkDateFromFormNotNull($s,$on,$table);
 }
 
 function checkDateFromFormNotNull($s, $on, $table){
