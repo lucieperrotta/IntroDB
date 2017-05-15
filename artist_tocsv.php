@@ -17,8 +17,8 @@ echo "<h2>Don't forget to delete artist at the beginning otherwise it is false !
 
 $index = getLastIndex($csv);
 
-$min = 300;
-$max = 420;
+$min = 0;
+$max = 200;
 $i = 0;
 
 var_dump(fgetcsv($file));
@@ -26,7 +26,6 @@ var_dump(fgetcsv($file));
 while(! feof($file)){
   $i++;
   $val = fgetcsv($file);
-  var_dump($val);
 
   if($i > $min){
 
@@ -44,6 +43,7 @@ while(! feof($file)){
       $script_array = parseNames($script);
       foreach ($script_array as $p){
         $p = parseComments($p);
+        if($p == "NULL") continue;
         $exist = isInCsvName($csv, $p,1);
 
         if(!is_numeric($exist)) {
@@ -69,6 +69,7 @@ while(! feof($file)){
       $pencils_array = parseNames($pencils);
       foreach ($pencils_array as $p){
         $p = parseComments($p);
+        if($p == "NULL") continue;
         $exist = isInCsvName($csv, $p,1);
         if(!is_numeric($exist)) {
           $add = $index . ",".$p."\n";
@@ -91,6 +92,7 @@ while(! feof($file)){
       $inks_array = parseNames($inks);
       foreach ($inks_array as $p){
         $p = parseComments($p);
+        if($p == "NULL") continue;
         $exist = isInCsvName($csv, $p,1);
         if(!is_numeric($exist)) {
           $add = $index . ",".$p."\n";
@@ -113,6 +115,7 @@ while(! feof($file)){
       $colors_array = parseNames($colors);
       foreach ($colors_array as $p){
         $p = parseComments($p);
+        if($p == "NULL") continue;
         $exist = isInCsvName($csv, $p,1);
         if(!is_numeric($exist)) {
           $add = $index . ",".$p."\n";
@@ -135,6 +138,7 @@ while(! feof($file)){
       $letters_array = parseNames($letters);
       foreach ($letters_array as $p){
         $p = parseComments($p);
+        if($p == "NULL") continue;
         $exist = isInCsvName($csv, $p,1);
         if(!is_numeric($exist)) {
           $add = $index . ",".$p."\n";
@@ -157,6 +161,7 @@ while(! feof($file)){
       $editing_array = parseNames($editing);
       foreach ($editing_array as $p){
         $p = parseComments($p);
+        if($p == "NULL") continue;
         $exist = isInCsvName($csv, $p,1);
         if(!is_numeric($exist)) {
           $add = $index . ",".$p."\n";

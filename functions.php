@@ -100,7 +100,7 @@ function parseNames($s, $delimiter=";"){
 }
 
 // return true if $s in contained in $csv file (opened) (at position $pos), false otherwise
-/*function isInCsv($file, $s, $pos){
+function isInCsv($file, $s, $pos){
 
 	rewind($file);
 
@@ -115,7 +115,7 @@ function parseNames($s, $delimiter=";"){
 		}
 	}
 	return false;
-}*/
+}
 
 // return true if $s in contained in $csv file (opened) (at position $pos), false otherwise
 // @TODO parse "?"
@@ -149,13 +149,19 @@ function parseToCompare($s){
 	$res = strtolower($res);
 	return $res;
 }
+/*
+var_dump(parseComments("rfjidrgi ?"));
+var_dump(parseComments("rfjidrgi (wewe)"));*/
 
-
-// delete from $s all content between () or []
+// delete from $s all content between () or [] or ?
 function parseComments($s) {
 	$res = preg_replace("/\[.*\]/", "", $s);
 	$res = preg_replace("/\(.*\)/", "", $res);
+	$res = preg_replace("/\?/", "", $res);
 
+	if(empty(preg_replace("/\s/","",$res))){
+		return "NULL";
+	}
 
 	$res = trim($res);
 	return $res;

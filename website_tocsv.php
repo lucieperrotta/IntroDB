@@ -11,11 +11,12 @@ $index = getLastIndex($csv);
 
 $min = 0;
 $max = 10000000;
-$i = 0;
 
 
 // get websites from all given files
 foreach ($files as $f => $pos) {
+  $i = 0;
+  echo "begin with " . $f;
   $file = fopen($f,"r");
   $val = fgetcsv($file); // avoid url column name
 

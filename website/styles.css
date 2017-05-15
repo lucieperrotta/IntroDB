@@ -180,3 +180,54 @@ input[type=submit]:hover {
 #displayBoxInsert fieldset {
 	text-transform: capitalize;
 }
+
+/***BASIC QUERIES***/
+
+section#basic_queries{
+	width:100%;
+	justify-content:center;
+}
+
+#queries{
+	width:35%;
+	display: inline-block;
+	vertical-align: top;
+	background:rgba(0,0,0,0.05);
+}
+
+#queries input{
+	width:85%;
+	height:auto;
+	margin:7px auto;
+
+}
+
+#queries input[type="submit"] {
+	white-space: normal;
+	font-size: 1.2em;
+	text-transform: lowercase;
+	background-color: #375C7D;
+	color:rgba(255,255,255,0.9);
+	font-weight: 200;
+	padding:10px;
+}
+
+#results {	
+	display: inline-block;
+	vertical-align: top;
+	width:55%;
+	flex-grow:2;
+}
+
+#results .titles {
+	font-weight: bold;
+}
+
+#results table td {
+	border: 1px solid black;
+	padding:5px;
+}
+
+#results #executing_time {
+	float:right;
+}

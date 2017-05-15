@@ -12,7 +12,7 @@ echo "<h2>Don't forget to run websites script first !!</h2>";
 $index = getLastIndex($csv);
 
 $min = 0;
-$max = 1000;
+$max = 1000000000;
 
 // get websites from all given files
 foreach ($files as $f => $pos) {
