@@ -31,14 +31,18 @@ Il y a une liste de queries auquelles réfléchir à comment les effectuer (des 
 
 
 
-Interface
-- insert: faire un formulaire avec les columns et insert -> faire attention aux conditions des entrées -> XSS ! KIM
-- search & delete : faire un select * WHERE touteslescolumns LIKE "%search%" (à vérifier). Faudrait trouver un moyen plus efficace. Je propose qu'on ajoute un bouton "delete" ici, genre il delete le current. LUCIE
-- queries : juste runner les queries qu'on a trouvé au dessus. Very easy si on les a bien écrit. TIM
+Interface KIM
+- insert: faire un formulaire avec les columns et insert -> faire attention aux conditions des entrées -> XSS ! 
+- search & delete : faire un select * WHERE touteslescolumns LIKE "%search%" (à vérifier). Faudrait trouver un moyen plus efficace. Je propose qu'on ajoute un bouton "delete" ici, genre il delete le current.
+- queries : juste runner les queries qu'on a trouvé au dessus. Very easy si on les a bien écrit. 
 
 
 
-J'ai réparti le boulot mais vous pouvez dire si ça vous plaît pas !
-
-
-Note: En vrai j'aurais pu faire un script qui insert direct plutôt que de se faire chier avec un import, mais la commande qui annule le check des foreign key marche pas trop... 
+sql filling
+- story_type
+- language
+- country
+- website / website_toid
+- series publication type
+- has genre / genre -> depends on story
+- has artist / artist -> depends on story

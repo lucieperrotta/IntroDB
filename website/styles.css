@@ -212,16 +212,29 @@ section#basic_queries{
 	padding:10px;
 }
 
-#results {	
+section#basic_queries #results {	
 	display: inline-block;
 	vertical-align: top;
 	width:55%;
 	flex-grow:2;
 }
 
+section#search_delete #results {
+	width:70%;
+	background-color: rgba(0,0,0,0.05);
+	margin: auto;
+	padding:10px;
+}
+
+section#search_delete #results input[type="submit"] {
+	float:right;
+}
+
 #results .titles {
 	font-weight: bold;
 }
+
+#results table{width:100%;}
 
 #results table td {
 	border: 1px solid black;
