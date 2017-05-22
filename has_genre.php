@@ -12,7 +12,7 @@ year -> date
 */
 
 $min = 0;
-$max = 2500;
+$max = 10000000000000;
 $i = 0;
 
 fwrite($mysql, "INSERT INTO has_genre(story_id,genre_id) VALUES");

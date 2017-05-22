@@ -10,13 +10,9 @@ echo "<h1>Featuredd Character</h1>";
 
 $index = getLastIndex($csv);
 
-$min = 0;
-$max = 200;
+$min = 7012;
+$max = 100000000;
 $i = 0;
-
-/*
-@TODO process "and" ?
-*/
 
 var_dump(fgetcsv($file));
 

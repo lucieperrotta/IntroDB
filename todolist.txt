@@ -43,6 +43,16 @@ sql filling
 - language
 - country
 - website / website_toid
+- publisher
+- brand group
+- indicia publisher
+
+- has character / character
+- has feature character
 - series publication type
-- has genre / genre -> depends on story
-- has artist / artist -> depends on story
+- issue
+- series
+- story
+- genre / has genre
+- has artist / artist (inks, pencils, colors, script, letters)
+- has editing story / issue

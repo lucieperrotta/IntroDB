@@ -5,8 +5,6 @@ include("functions.php");
 
 $file = fopen("comics/issue.csv","r");
 $mysql = fopen("issue.sql", "w"); // write into this sql to import 
-$csv = fopen("comics/artist.csv", "a+");
-$has_editing = fopen("comics/has_editing_issue.csv", "w+");  
 /*
 date marche pas -> besoin que year
 
@@ -17,10 +15,9 @@ isbn, valid isbn become varchar
 
 
 // to test and not print/insert all lines
-$min = 0;
-$max = 50;
+$min = 880001;
+$max = 980001;
 $i = 0;
-$index = getLastIndex($csv);
 
 
 // print first line to show columns
@@ -65,7 +62,6 @@ while(! feof($file)){
 	  $price = parseDoubleQuote($val[5]);
 	  $page_count = getInt($val[6]);
 	  $indicia_frequency = parseDoubleQuote($val[7]);
-	  $editing = parseDoubleQuote($val[8]);
 	  $notes = parseDoubleQuote($val[9]);
 	  $isbn = parseDoubleQuote($val[10]);
 	  $valid_isbn = parseDoubleQuote($val[11]);
@@ -73,29 +69,6 @@ while(! feof($file)){
 	  $title = parseDoubleQuote($val[13]);
 	  $on_sale_date = getDateFromYear($val[14]);
 	  $rating = parseDoubleQuote($val[15]);
-
-
-    if($editing!="NULL"){
-      $editing_array = parseNames($editing);
-      foreach ($editing_array as $p){
-        $p = parseComments($p);
-        $exist = isInCsvName($csv, $p,1);
-        if(!is_numeric($exist)) {
-          $add = $index . ",".$p."\n";
-          fwrite($csv, $add);
-
-          $query = $id.",".$index ."\n";
-          fwrite($has_editing, $query);
-
-          $index++;
-        }
-        else {
-          // author exist thus we can add in has_
-          $query = $id.",".$exist ."\n";
-          fwrite($has_editing, $query);
-        }
-      }
-    }
 
 	// to debug, var_dump query or $con->query(query) -> should print a PDO object and not true or false (je crois que true veut dire qu'elle existe et false c'est qu'il y a une erreur) -> c/c une query dans sql dans phpmyadmin va te donner des indications sur pk ça fail
 

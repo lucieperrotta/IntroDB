@@ -11,8 +11,8 @@ website id ->> mettre dans table website -> remettre foreign key
 year -> date
 */
 
-$min = 0;
-$max = 500;
+$min = 1518;
+$max = 10000;
 $i = 0;
 
 var_dump(fgetcsv($file));

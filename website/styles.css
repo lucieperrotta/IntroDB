@@ -244,3 +244,7 @@ section#search_delete #results input[type="submit"] {
 #results #executing_time {
 	float:right;
 }
+
+input.delete {
+	width:140px;
+}

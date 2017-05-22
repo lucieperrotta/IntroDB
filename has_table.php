@@ -5,11 +5,11 @@ include("functions.php");
 $mysql = fopen("has_table.sql", "w"); // write into this sql to import 
 
 $min = 0;
-$max = 2500;
+$max = 1000000000000;
 
  
 // script
-$i = 0;
+/*$i = 0;
 $file = fopen("comics/has_script.csv","r");
 while(! feof($file)){
   $i++;
@@ -32,10 +32,10 @@ while(! feof($file)){
     }
   }
 }
-fclose($file);
+fclose($file);*/
 
 // colors
-$i = 0;
+/*$i = 0;
 $file = fopen("comics/has_colors.csv","r");
 while(! feof($file)){
   $i++;
@@ -58,10 +58,10 @@ while(! feof($file)){
     }
   }
 }
-fclose($file);
+fclose($file);*/
 
 // inks
-$i = 0;
+/*$i = 0;
 $file = fopen("comics/has_inks.csv","r");
 while(! feof($file)){
   $i++;
@@ -84,11 +84,11 @@ while(! feof($file)){
     }
   }
 }
-fclose($file);
+fclose($file);*/
 
 
 // pencils
-$i = 0;
+/*$i = 0;
 $file = fopen("comics/has_pencils.csv","r");
 while(! feof($file)){
   $i++;
@@ -111,11 +111,11 @@ while(! feof($file)){
     }
   }
 }
-fclose($file);
+fclose($file);*/
 
 
-// colors
-$i = 0;
+// letters
+/*$i = 0;
 $file = fopen("comics/has_letters.csv","r");
 while(! feof($file)){
   $i++;
@@ -129,7 +129,7 @@ while(! feof($file)){
 
     $query = '('.$s_id.','. $a_id.' );
     ';
-    fwrite($mysql, "INSERT INTO has_colors(story_id,artist_id) VALUES");
+    fwrite($mysql, "INSERT INTO has_letters(story_id,artist_id) VALUES");
     fwrite($mysql,$query);
 
     if($i==$max){
@@ -137,11 +137,11 @@ while(! feof($file)){
     }
   }
 }
-fclose($file);
+fclose($file);*/
 
 
 // editing
-$i = 0;
+/*$i = 0;
 $file = fopen("comics/has_editing_story.csv","r");
 while(! feof($file)){
   $i++;
@@ -163,7 +163,7 @@ while(! feof($file)){
     }
   }
 }
-fclose($file);
+fclose($file);*/
 
 
 // editing

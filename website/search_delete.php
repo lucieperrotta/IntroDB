@@ -7,18 +7,19 @@ include("../db.php");
 <body>
 
 	<?php 
+	// DELETE
 	if(isset($_POST["delete"])){
 		$id = $_POST["id"];
-		$table = $_POST["table"][0];
+		$table = $_POST["table"];
 		$sql = "DELETE FROM ".$table." WHERE id=" . $id;
 
 		var_dump($sql);
 
 		$add_query = $con->query($sql);
 		$results = $add_query->fetchAll(PDO::FETCH_ASSOC);
-
-
 	}
+
+
 	?>
 
 	<?php //var_dump($_POST); ?>
@@ -39,22 +40,34 @@ include("../db.php");
 			if(isset($_POST["search"])){
 
 				$search = htmlspecialchars($_POST["search"]);
-				$tables = ["story"];
 
-				$alltables = implode(",",$tables);
+				$searchTable = [
+				"story"=>"title", 
+				"artist"=>"name",
+				"characters"=>"name",
+				"series"=>"name"];
 
-				$sql = "SELECT * FROM ".$alltables." WHERE title LIKE '%" .$search."%'";
+				$msc = 0;
 
-				$msc = microtime(true);
-				$add_query = $con->query($sql);
-				$results = $add_query->fetchAll(PDO::FETCH_ASSOC);
-				$msc = microtime(true) - $msc;
-	//var_dump($results);
+				foreach ($searchTable as $table => $column) {
+
+					echo "<h2>Searching '".$search."' in ".$table."</h2>";
+
+					$sql = "
+					SELECT * FROM ".$table." WHERE ".$column." LIKE '%" .$search."%' LIMIT 10 
+					";
+
+					//var_dump($sql);
+
+					$msc = microtime(true);
+					$add_query = $con->query($sql);
+					$results = $add_query->fetchAll(PDO::FETCH_ASSOC);
+					$msc = microtime(true) - $msc;
 
 
-				if(!empty($results)) {
-					echo "<table>";
-					echo '<tr class="titles">';
+					if(!empty($results)) {
+						echo "<table>";
+						echo '<tr class="titles">';
 					/*for($i=0;$i<sizeof($columns);$i++){
 						echo "<td>";
 						echo ($columns[$i]) . "<br/>";
@@ -75,11 +88,10 @@ include("../db.php");
 						<input type="hidden" name="id" value="'.$value["id"].'">';
 						echo '<input type="hidden" name="search" value="'.$search.'">';
 
-						for($i=0;$i<sizeof($tables);$i++){
-							echo '<input type="hidden" name="table[]" value="'.$tables[$i].'">';
-						}
+						echo '<input type="hidden" name="table" value="'.$table.'">';
+						
 
-						echo '<input type="submit" name="delete" value="delete">
+						echo '<input class="delete" type="submit" name="delete" value="delete">
 					</form>';
 					echo "</td>";
 					echo "</tr>";
@@ -89,18 +101,21 @@ include("../db.php");
 			else {
 				echo "<h3>No results</h3>";
 			}
+			
 			echo '<div id="executing_time">'.$msc.' seconds</div>';
 		}
-		?>
+	}
 
-		<?php 
+	?>
+
+	<?php 
 
 	if(isset($_POST["delete"])){
 		echo "<h3>Entry with id ".$id." deleted</h3>";
 	}
-		 ?>
+	?>
 
-	</div>
+</div>
 
 </section>
 

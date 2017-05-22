@@ -18,7 +18,7 @@ echo "<h2>Don't forget to delete artist at the beginning otherwise it is false !
 $index = getLastIndex($csv);
 
 $min = 0;
-$max = 200;
+$max = 10000000000;
 $i = 0;
 
 var_dump(fgetcsv($file));

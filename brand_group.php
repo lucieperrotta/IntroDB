@@ -13,7 +13,7 @@ year -> date
 */
 
 $min = 0;
-$max = 3000;
+$max = 10000000;
 $i = 0;
 
 var_dump(fgetcsv($file));

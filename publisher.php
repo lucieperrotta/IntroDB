@@ -2,7 +2,7 @@
 include("db.php");
 include("functions.php");
 
-$file = fopen("comics/publisher.csv","r");
+$file = fopen("comics/publisher_id.csv","r");
 $mysql = fopen("publisher.sql", "w"); // write into this sql to import 
 
 
@@ -12,7 +12,7 @@ year -> date
 */
 
 $min = 0;
-$max = 2000;
+$max = 1000000;
 $i = 0;
 
 var_dump(fgetcsv($file));
@@ -39,7 +39,9 @@ var_dump(fgetcsv($file));
       $year_began = getDateFromYear($val[3]);
       $year_ended = getDateFromYear($val[4]);
       $notes = parseDoubleQuote($val[5]);
-      $url = parseDoubleQuote($val[6]);
+      //$url = parseDoubleQuote($val[6]);
+      $url = getInt($val[6]);
+
 
   		$query = 'INSERT INTO publisher(id, name, country_id, year_began, year_ended, notes, website_id) VALUES(
       '.$id.','.$name.',
