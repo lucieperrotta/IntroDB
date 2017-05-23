@@ -63,15 +63,32 @@ FROM	(
 		SELECT	P.id,
 				COUNT(*) as num
 		FROM	series S,
-				publisher P, 
-				language L
+				publisher P
 		WHERE	S.publisher_id = P.id
 		GROUP BY P.id
 		) as T
 ORDER BY T.num LIMIT 10
 
-
 so long: 10 publishier name in order by series
+
+-- eee 2
+SELECT	T.pid, 
+		T.num, 
+		SS.language_id
+FROM	series SS,
+		SELECT	T.pid, 
+				T.num
+		FROM	(
+				SELECT	P.id,
+						COUNT(*) as num
+				FROM	series S,
+						publisher P
+				WHERE	S.publisher_id = P.id
+				GROUP BY P.id
+				) as T
+		ORDER BY T.num LIMIT 10
+WHERE	T.pid = SS.publisher_id
+
 
 -- f) left join wont work ???
 SELECT	T.name, 
@@ -91,7 +108,7 @@ FROM	(
 				SR.target_id IS NULL
 		GROUP BY L.name
 		)as T
-ORDER BY T.num LIMIT 10
+ORDER BY T.num DESC LIMIT 10
 
 -- g)
 
@@ -136,7 +153,8 @@ GROUP BY IP.id
 SELECT	T.name,
 		COUNT(*) as ipn
 FROM	(
-		SELECT	distinct BG.name, IP.id
+		SELECT	distinct BG.name, 
+				IP.id
 		FROM	indicia_publisher IP, 
 				publisher P,
 				brand_group BG
@@ -144,27 +162,56 @@ FROM	(
 				IP.publisher_id = P.id
 		) AS T
 GROUP BY T.name
-ORDER BY ipn LIMIT 10
+ORDER BY ipn DESC LIMIT 10
 
 -- j)
 SELECT T.name,
 		AVG(*) as lgh
-		(
-		SELECT	I.name, S.year_ended-S.year_began
+FROM	(
+		SELECT	I.name, 
+				S.year_ended-S.year_began
 		FROM	series S,
 				publisher P,
-				indicia_poublisher I
+				indicia_publisher I
 		WHERE	S.publisher_id = P.id AND
 				I.publisher_id = P.id
 		) as T
 GROUP BY T.name
 ORDER by lgh
 
--- k)
+-- k) 
+SELECT	I.name,
+		COUNT(*) as nb
+FROM	(
+		SELECT	I.id
+		FROM	series S, 
+				publisher P,
+				indicia_publisher I
+		WHERE	S.first_issue_id = S.last_issue_id AND
+				S.publisher_id = P.id AND
+				I.publisher_id = P.id
+		) as T,
+		indicia_publisher I
+GROUP BY I.name
+ORDER BY nb DESC LIMIT 10
 
+-- l)
+SELECT	S.id, IP.name, COUNT(*) as nb
+FROM	story S, 
+		has_script HS,	
+		issue I,
+		indicia_publisher IP
+WHERE	HS.story_id = S.id AND
+		S.issue_id = I.id AND
+		I.indicia_publisher_id = IP.id
+GROUP BY S.id, IP.name
+ORDER BY nb DESC LIMIT 10
 
+-- m) Print all Marvel heroes that appear in Marvel-DC story crossovers.
 
--- m) what do you mean crossover ?
+-- some indicia name are marvel dc
+
+LIKE '%marvel%DC%'
 
 -- n)
 SELECT	T.name
