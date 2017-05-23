@@ -1,30 +1,29 @@
--- a) OK
+-- a)
 SELECT T.name
 FROM	(
 		SELECT 	B.name, 
 				COUNT(*) AS bid
 		FROM 	brand_group B,
 				indicia_publisher I,
-				publisher P,
 				country C
 		WHERE	C.name = 'Belgium' AND
 				C.id = I.country_id AND
-				I.publisher_id = P.id AND
-				P.id = B.publisher_id
+				I.publisher_id = B.publisher_id
 		GROUP BY B.name
 		) AS T
 ORDER BY T.bid
 
--- b) OK
+-- b)
 SELECT 	P.id, P.name
 FROM 	publisher P,
 		country C,
 		series S
 WHERE	C.name = 'Denmark' AND
 		S.country_id = C.id AND
-		S.publisher_id = P.id
+		S.publisher_id = P.id AND
+		S.publication_type_id = 1
 
--- c) OK
+-- c)
 SELECT	S.name
 FROM	series S,
 		country C,
@@ -34,13 +33,22 @@ WHERE	T.name = 'magazine' AND
 		S.country_id = C.id AND
 		C.name = "Switzerland"
 
--- d) publication_date must be year only!!!
+-- d)
 SELECT 	COUNT(*)
 FROM 	issue I,
 WHERE	I.publication_date >= 1990
 GROUP BY I.publication_date
 
--- e) almost OK (now returns all series by publisher, not by indicia)
+-- e)
+SELECT 	I.name AS name, 
+		COUNT(I.id) AS nb
+FROM 	indicia_publisher I 
+		LEFT JOIN series S 
+		ON S.publisher_id = I.publisher_id 
+WHERE 	I.name LIKE '%DC_comics%' 
+GROUP BY I.name
+
+/*
 SELECT T.name, COUNT(*)
 FROM	(
 		SELECT	I.name
@@ -49,17 +57,18 @@ FROM	(
 				series S
 		WHERE	I.publisher_id = P.id AND
 				S.publisher_id = P.id AND
-				I.name LIKE '%DC__omics%'
+				I.name LIKE '%DC_comics%'
 		) AS T
 GROUP BY T.name
+*/
 
--- f) OK
+-- f)
 SELECT	S.title
 FROM 	story S,
 		story_reprint R
 WHERE 	S.id = R.origin_id
 GROUP BY R.origin_id
-ORDER BY COUNT(R.origin_id)
+ORDER BY COUNT(R.origin_id) DESC LIMIT 10
 
 -- g)
 SELECT 	distinct A.name
@@ -81,12 +90,13 @@ WHERE	A.id = SC.artist_id AND
 -- h)
 SELECT	S.title
 FROM 	story S,
-		character C, 
+		characters C,
 		has_characters HS
 WHERE	0 =	(	SELECT COUNT(distinct R.origin_id)
 			 	FROM story_reprint R
 			 	WHERE S.id = R.origin_id
 			) AND
-		HS.characters_id = C.id AND
+		HS.character_id = C.id AND
 		HS.story_id = S.id AND
-		C.name LIKE '%Batman%'
+		C.name LIKE '%Batman%' AND
+		S.features NOT LIKE '%Batman%'
