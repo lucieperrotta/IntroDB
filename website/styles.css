@@ -15,39 +15,64 @@ html {
 
 a, a:active {
 	text-decoration: none;
+	color: white;
+	text-transform: lowercase;
+	font-style: italic;
+
+	transition: all 0.5s;
+}
+
+a:hover {
+	opacity:0.6;
 }
 
 h1 {
-	font-size: 3.5em;
+	font-size: 1.3em;
+	font-family: 'Lora', serif;
+}
+
+h2 {
+	font-size: 45px;
+	font-family: 'Lora', serif;
 }
 
 table.table_content {
 	border:1px solid black;
 	width:80%;
 	margin:auto;
+	opacity:0.6;
 }
 
 table.table_content td{
 	border:1px solid black;
+	padding:2px 5px;
 }
 
 table.table_content td.id{
 	font-weight: bold;
 }
 
-nav {
-	font-size: 3em;
+nav{
+	margin-bottom: 15px;
+}
+
+nav ul{
+	font-size: 2.8em;
+	display: -webkit-flex;
+	display: flex;
+	align-items: center;
+	background:#f67280;
+	color:white;
 }
 
 nav li {
-	display:inline-block;
+	display:block;
 	margin:0 1%;
 	padding:5px;
-	background:lightgrey;
 }
 
 section {
-	font-size: 1.5em;
+	font-size: 1.2em;
 	padding:1%;
 }
 
@@ -56,8 +81,7 @@ section {
 }
 
 form {
-	font-size: 1.3em;
-	background: #eee;
+	font-size: 1em;
 	text-align: center;
 }
 
@@ -67,14 +91,40 @@ fieldset {
 	vertical-align: top;
 	border: none;
 	text-align: left;
+
+	-webkit-column-count: 3; /* Chrome, Safari, Opera */
+	-moz-column-count: 3; /* Firefox */
+	column-count: 3;
 }
 
+textarea, input{
+	font-family:arial;
+	font-size: 1.2em;
+	width:400px;
+	margin-bottom:20px;
+	padding:3px;
+	margin-left: 15px;
+	color:rgba(0,0,0,0.7);
+} 
+
 input[type=submit] {
-	background:lightgreen;
+	width:300px;
+	background:#FFD79C;
 	border:none;
 	padding:5px 10px;
 	text-transform: uppercase;
 	font-weight: bold;
+	font-size: 1em;
+	margin:20px auto;
+	color:rgba(0,0,0,1);
+}
+
+input[type=submit]:hover {
+	background:orange;
+}
+
+input[type=radio] {
+	width:20px;
 }
 
 input[type=submit]:hover {
@@ -86,16 +136,35 @@ input[type=submit]:hover {
 }
 
 /***********INSERT***********/
+
+#ongletsBox {
+	text-align: center;
+}
+
 #ongletsBox span {
-	font-size: 1.5em;
-	padding:5px;
+	font-size: 1.6em;
+	padding:5px 20px;
 	margin:5px;
-	background-color: beige;
+	background-color: #375C7D;
+	color:#FFD79C;
+	text-transform: lowercase;
+	border-radius: 4px;
+
+	transition: all 0.5s;
+}
+
+#ongletsBox span.spanActive,#ongletsBox span:hover {
+	background:red;
+}
+
+#ongletsBox span:hover {
+	cursor: pointer;
 }
 
 #displayBoxInsert {
-	background:rgba(0,0,0,0.1);
-
+	border-radius: 7px;
+	padding:2% 0;
+	background: rgba(0,0,0,0.05);
 }
 
 #displayBoxInsert div {
@@ -106,4 +175,76 @@ input[type=submit]:hover {
 
 #displayBoxInsert div.active {
 	display:block;
+}
+
+#displayBoxInsert fieldset {
+	text-transform: capitalize;
+}
+
+/***BASIC QUERIES***/
+
+section#basic_queries{
+	width:100%;
+	justify-content:center;
+}
+
+#queries{
+	width:35%;
+	display: inline-block;
+	vertical-align: top;
+	background:rgba(0,0,0,0.05);
+}
+
+#queries input{
+	width:85%;
+	height:auto;
+	margin:7px auto;
+
+}
+
+#queries input[type="submit"] {
+	white-space: normal;
+	font-size: 1.2em;
+	text-transform: lowercase;
+	background-color: #375C7D;
+	color:rgba(255,255,255,0.9);
+	font-weight: 200;
+	padding:10px;
+}
+
+section#basic_queries #results {	
+	display: inline-block;
+	vertical-align: top;
+	width:55%;
+	flex-grow:2;
+}
+
+section#search_delete #results {
+	width:70%;
+	background-color: rgba(0,0,0,0.05);
+	margin: auto;
+	padding:10px;
+}
+
+section#search_delete #results input[type="submit"] {
+	float:right;
+}
+
+#results .titles {
+	font-weight: bold;
+}
+
+#results table{width:100%;}
+
+#results table td {
+	border: 1px solid black;
+	padding:5px;
+}
+
+#results #executing_time {
+	float:right;
+}
+
+input.delete {
+	width:140px;
 }

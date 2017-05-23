@@ -6,7 +6,12 @@
  <body>
 
  <?php include("navigation.php"); ?>
- 	<div id="wrapperContent">
+
+
+Hey c'est l'index par ici !
+
+
+ 	<!-- <div id="wrapperContent">
  		<h1>Grand comics</h1>
 
  		<form action="process.php" method="post">
@@ -42,7 +47,7 @@
  			Display content here
  		</div>
 
- 	</div>
+ 	</div> -->
  </body>
 
  </html> 

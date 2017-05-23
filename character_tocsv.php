@@ -10,13 +10,9 @@ echo "<h1>Characters</h1>";
 
 $index = getLastIndex($csv);
 
-$min = 0;
-$max = 2000;
+$min = 10300;
+$max = 100000000;
 $i = 0;
-
-/*
-@TODO process "and" ?
-*/
 
 var_dump(fgetcsv($file));
 
@@ -46,7 +42,6 @@ while(! feof($file)){
           $index++;
         }
         else {
-          // author exist thus we can add in has_
           $query = $id.",".$exist ."\n";
           fwrite($has_csv, $query);
         }
@@ -59,11 +54,6 @@ while(! feof($file)){
   }
 
 }
-//var_dump($s1->fetchAll(PDO::FETCH_ASSOC));
-
-  /*$s = $con->query("SELECT * FROM story ORDER BY id DESC LIMIT 10");
-  $result = $s->fetchAll(PDO::FETCH_ASSOC);
-  var_dump($result);*/
 
   fclose($file);
   fclose($csv);

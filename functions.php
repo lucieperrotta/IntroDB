@@ -57,16 +57,18 @@ function getDateFromYear($year) {
 
 	//var_dump($res1);
 
+
 	for ($i = 0; $i < sizeof($res1); $i++) {
 		if(strlen($res1[$i])==4) {
-			return $res;
+			return $res1[$i];
 		}
 	}
 
 	$month=1; $day=1;
 	$hour=0; $minute=0; $second=0;
 
-	return "error";
+	// no date with 4 digits
+	return "0";
 }
 
 function getInt($i) {
@@ -100,7 +102,7 @@ function parseNames($s, $delimiter=";"){
 }
 
 // return true if $s in contained in $csv file (opened) (at position $pos), false otherwise
-/*function isInCsv($file, $s, $pos){
+function isInCsv($file, $s, $pos){
 
 	rewind($file);
 
@@ -115,7 +117,7 @@ function parseNames($s, $delimiter=";"){
 		}
 	}
 	return false;
-}*/
+}
 
 // return true if $s in contained in $csv file (opened) (at position $pos), false otherwise
 // @TODO parse "?"
@@ -149,13 +151,19 @@ function parseToCompare($s){
 	$res = strtolower($res);
 	return $res;
 }
+/*
+var_dump(parseComments("rfjidrgi ?"));
+var_dump(parseComments("rfjidrgi (wewe)"));*/
 
-
-// delete from $s all content between () or []
+// delete from $s all content between () or [] or ?
 function parseComments($s) {
 	$res = preg_replace("/\[.*\]/", "", $s);
 	$res = preg_replace("/\(.*\)/", "", $res);
+	$res = preg_replace("/\?/", "", $res);
 
+	if(empty(preg_replace("/\s/","",$res))){
+		return "NULL";
+	}
 
 	$res = trim($res);
 	return $res;

@@ -1,7 +1,9 @@
 <?php 
 include("../db.php");
 include("../functions.php");
+include("functions_todb.php");
 
+$table = "issue";
 
 $number = parseDoubleQuote(htmlspecialchars($_POST["number"]));
 $series_id= getInt(htmlspecialchars($_POST["series_id"]));
@@ -19,59 +21,23 @@ $title = parseDoubleQuote(htmlspecialchars($_POST["title"]));
 $on_sale_date = getInt(htmlspecialchars($_POST["on_sale_date"]));
 $rating = parseDoubleQuote(htmlspecialchars($_POST["rating"]));
 
+// HAVE TO EXIST AND NOT NULL
+checkForeignKeyNotNull($series_id, "series", "series_id", $table, $con);
 
-	// ------------ HAVE TO EXIST
-	// check no duplicata
-$s = $con->query("SELECT id FROM issue WHERE title='".$title."'"); // @todo compare better
-$title_id = $s->fetchAll(PDO::FETCH_ASSOC);
-if(!empty($title_id)) {
-	header("Location: insert.php?currenttable=issue&code=error&cause=duplicata&on=title"); exit();
-}
+// check no duplicata
+noDuplicata($title, "title",$table,$con);
 
-		// ISSUE ID
-		// check validity of issue id
-if(!is_numeric($series_id)) {
-	header("Location: insert.php?currenttable=issue&code=error&cause=notnumber&on=seriesid"); exit();
-}
-$s = $con->query("SELECT id FROM series WHERE id='".$series_id."'"); // @todo compare better
-$series_id_check = $s->fetchAll(PDO::FETCH_ASSOC);
-if(empty($series_id_check)) {
-	header("Location: insert.php?currenttable=issue&code=error&cause=notexist&on=seriesid"); exit();
-}
+// ------------- CAN BE NULL BUT NOT STRING
+checkForeignKey($indicia_publisher_id, "indicia_publisher", "indicia_publisher_id", $table, $con);
+
+// CHECK VALIDITY
+checkIsNullOrInt($page_count, "page count", $table);
+checkIsNullOrInt($barcode, "barcode", $table);
+checkIsNullOrInt($on_sale_date, "sale date", $table);
 
 
-		// ------------- CAN BE NULL BUT NOT STRING
-		// INDICIA_PUBLISHER_ID
-		// check validity
-if($indicia_publisher_id != "NULL" && !is_numeric($indicia_publisher_id)) {
-	header("Location: insert.php?currenttable=issue&code=error&cause=notnumber&on=indicia_publisher_id"); exit();
-}
-
-		// PAGE COUNT
-		// check validity
-if($page_count != "NULL" && !is_numeric($page_count)) {
-	header("Location: insert.php?currenttable=issue&code=error&cause=notnumber&on=page_count"); exit();
-}
-
-		// BARCODE
-		// check validity
-if($barcode != "NULL" && !is_numeric($barcode)) {
-	header("Location: insert.php?currenttable=issue&code=error&cause=notnumber&on=barcode"); exit();
-}
-
-		// BARCODE
-		// check validity
-if($on_sale_date != "NULL" && !is_numeric($on_sale_date)) {
-	header("Location: insert.php?currenttable=issue&code=error&cause=notnumber&on=on_sale_date"); exit();
-}
-
-
-		// ID
-		// get higher id (cannot use AI because of foreignkey...)
-$s = $con->query("SELECT MAX(id) FROM issue");
-$id_query = $s->fetchAll(PDO::FETCH_ASSOC);
-$id = $id_query[0]["MAX(id)"] + 1;
-
+// ID
+$id = getLastId($table,$con);
 
 
 		// Insert issue itself (o/w cannot insert into has_ table)
@@ -82,7 +48,7 @@ $query = 'INSERT INTO issue(id, number, series_id, indicia_publisher_id, publica
 );';
 
 $add_query = $con->query($query);
-$s->fetchAll(PDO::FETCH_ASSOC);
+$add_query->fetchAll(PDO::FETCH_ASSOC);
 
 
 		// Editing

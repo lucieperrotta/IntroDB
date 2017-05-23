@@ -11,17 +11,11 @@ website id ->> mettre dans table website -> remettre foreign key
 year -> date
 */
 
-$min = 0;
-$max = 500;
+$min = 1518;
+$max = 10000;
 $i = 0;
 
 var_dump(fgetcsv($file));
-
-/*
-  0 => string 'id' (length=2)
-  1 => string 'code' (length=4)
-  2 => string 'name' (length=4)
-*/
 
   fwrite($mysql, "INSERT INTO story_reprint(id,origin_id, target_id) VALUES");
 

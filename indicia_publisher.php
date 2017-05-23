@@ -2,7 +2,7 @@
 include("db.php");
 include("functions.php");
 
-$file = fopen("comics/indicia_publisher.csv","r");
+$file = fopen("comics/indicia_publisher_id.csv","r");
 $mysql = fopen("indicia_publisher.sql", "w"); // write into this sql to import 
 
 
@@ -12,7 +12,7 @@ year -> date
 */
 
 $min = 0;
-$max = 3000;
+$max = 10000000;
 $i = 0;
 
 var_dump(fgetcsv($file));
@@ -42,7 +42,9 @@ var_dump(fgetcsv($file));
       $year_ended = getDateFromYear($val[5]);
       $is_surrogate = getInt($val[6]);
       $notes = parseDoubleQuote($val[7]);
-      $url = parseDoubleQuote($val[8]);
+      //$url = parseDoubleQuote($val[8]);
+      $url = getInt($val[8]);
+
 
   		$query = 'INSERT INTO indicia_publisher(id, name, publisher_id, country_id, year_began, year_ended, is_surrogate, notes, website_id) VALUES(
       '.$id.','.$name.',
@@ -53,7 +55,6 @@ var_dump(fgetcsv($file));
       '.$notes.','.$url.'
   		);';
 
-  	//var_dump($query);
 
   		//print_r($query);
       fwrite($mysql,$query);

@@ -11,8 +11,8 @@ website id ->> mettre dans table website -> remettre foreign key
 year -> date
 */
 
-$min = 0;
-$max = 500;
+$min = 778;
+$max = 100000000;
 $i = 0;
 
 var_dump(fgetcsv($file));
@@ -23,7 +23,7 @@ var_dump(fgetcsv($file));
   2 => string 'name' (length=4)
 */
 
-  fwrite($mysql, "INSERT INTO issue_reprint(id,origin_issue_id, target_issue_id) VALUES");
+  fwrite($mysql, "INSERT INTO issue_reprint(id,origin_id, target_id) VALUES");
 
   while(! feof($file)){
   	$i++;

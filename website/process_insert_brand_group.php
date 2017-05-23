@@ -20,7 +20,7 @@ checkDateFromForm($year_began,"year_began",$table);
 checkDateFromForm($year_ended,"year_ended",$table);
 
 // -------------HAVE TO EXIST
-checkForeignKey($publisher_id, "publisher", "publisher_id", $table, $con);
+checkForeignKeyNotNull($publisher_id, "publisher", "publisher_id", $table, $con);
 
 
 // WEBSITE

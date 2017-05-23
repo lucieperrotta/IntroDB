@@ -42,7 +42,7 @@ function noDuplicata($s, $on, $table, $con){
 	}
 }
 
-function checkForeignKey($s, $foreignTable, $on, $table, $con){
+function checkForeignKeyNotNull($s, $foreignTable, $on, $table, $con){
 	if(!is_numeric($s)) {
 		header("Location: insert.php?currenttable=".$table."&code=error&cause=notnumber&on=".$on); exit();
 	}
@@ -53,6 +53,11 @@ function checkForeignKey($s, $foreignTable, $on, $table, $con){
 	}
 }
 
+function checkForeignKey($s, $foreignTable, $on, $table, $con){
+	if($s=="NULL") return;
+	checkForeignKeyNotNull($s, $foreignTable, $on, $table, $con);
+}
+
 function checkIsNullOrInt($s, $on, $table){
 	if($s!="NULL" && !is_numeric($s)) {
 		header("Location: insert.php?currenttable=".$table."&code=error&cause=notnumber&on=".$on); exit();
@@ -60,7 +65,19 @@ function checkIsNullOrInt($s, $on, $table){
 }
 
 function checkDateFromForm($s, $on, $table){
+	if($s=="NULL") return;
+	checkDateFromFormNotNull($s,$on,$table);
+}
+
+function checkDateFromFormNotNull($s, $on, $table){
 	if($s!="" && (!is_numeric($s) || intval($s)>2020)) {
 		header("Location: insert.php?currenttable=".$table."&code=error&cause=notnumber&on=".$on); exit();
+	}
+}
+
+function checkLength($s, $length, $on, $table){
+	var_dump(sizeof($s));
+	if(strlen($s) > $length)  {
+		header("Location: insert.php?currenttable=".$table."&code=error&cause=toolong&on=".$on); exit();
 	}
 }

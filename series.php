@@ -10,8 +10,8 @@ $mysql = fopen("series.sql", "w"); // write into this sql to import
 date marche pas -> besoin que year
 */
 
-$min = 0;
-$max = 100;
+$min = 8501;
+$max = 10000;
 $i = 0;
 
 var_dump(fgetcsv($file));
@@ -62,24 +62,12 @@ var_dump(fgetcsv($file));
   		$publication_type_id = getInt($val[17]);
 
   		$query = 'INSERT INTO series(id, name, format, year_began, year_ended, publication_dates, first_issue_id, last_issue_id, publisher_id, country_id, language_id, notes, color, dimensions, paper_stock, binding, publishing_format, publication_type_id) VALUES(
-  		'.$id.',
-  		'.$name.',
-  		'.$format.',
-  		'.$year_began.',
-  		'.$year_ended.',
-  		'.$publication_dates.',
-  		'.$first_issue_id.',
-  		'.$last_issue_id.',
-  		'.$publisher_id.',
-  		'.$country_id.',
-  		'.$language_id.',
-  		'.$notes.',
-  		'.$color.',
-  		'.$dimensions.',
-  		'.$paper_stock.',
-  		'.$binding.',
-  		'.$publishing_format.',
-  		'.$publication_type_id.'
+  		'.$id.','.$name.','.$format.','.$year_began.',
+  		'.$year_ended.','.$publication_dates.',
+  		'.$first_issue_id.','.$last_issue_id.','.$publisher_id.','.$country_id.',
+  		'.$language_id.','.$notes.',
+  		'.$color.','.$dimensions.','.$paper_stock.','.$binding.',
+  		'.$publishing_format.','.$publication_type_id.'
   		);';
 
   	//var_dump($query);

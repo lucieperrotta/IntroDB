@@ -8,8 +8,8 @@ $table = "indicia_publisher";
 $name = parseDoubleQuote(htmlspecialchars($_POST["name"]));
 $publisher_id= getInt(htmlspecialchars($_POST["publisher_id"]));
 $country_id = getInt(htmlspecialchars($_POST["country_id"]));
-$year_began = htmlspecialchars($_POST["year_began"]);
-$year_ended = htmlspecialchars($_POST["year_ended"]);
+$year_began = getInt(htmlspecialchars($_POST["year_began"]));
+$year_ended = getInt(htmlspecialchars($_POST["year_ended"]));
 $is_surrogate = getInt(htmlspecialchars($_POST["is_surrogate"]));
 $notes = parseDoubleQuote(htmlspecialchars($_POST["notes"]));
 $url = parseDoubleQuote(htmlspecialchars($_POST["website"]));
@@ -21,8 +21,8 @@ checkDateFromForm($year_ended,"year_ended",$table);
 checkPrimaryKey($name,"name",$table,$con);
 
 // -------------HAVE TO EXIST
-checkForeignKey($publisher_id, "publisher", "publisher_id", $table, $con);
-checkForeignKey($country_id, "country","country_id",$table,$con);
+checkForeignKeyNotNull($publisher_id, "publisher", "publisher_id", $table, $con);
+checkForeignKeyNotNull($country_id, "country","country_id",$table,$con);
 
 
 // -------- GET NEEDED ID
