@@ -1,5 +1,22 @@
--- a) flemme
-SELECT 
+-- a) changer un peu
+SELECT 	name, 
+		nb
+FROM 	series INNER JOIN
+   		(SELECT series_id, 
+   				COUNT(*) AS nb
+    	FROM 	issue INNER JOIN 
+        		(SELECT distinct issue_id as iid
+        		FROM 	story
+        		WHERE 	type_id NOT IN
+	            		(SELECT type_id
+	            		FROM 	story
+	           			GROUP BY type_id
+	            		ORDER BY count(*) DESC LIMIT 1
+	            		)
+            	) st ON issue.id=st.iid
+    			GROUP BY series_id
+    	) ON ID=series_id
+ORDER BY db DESC
 
 -- b)
 SELECT 	P.name
@@ -9,9 +26,7 @@ WHERE 	(SELECT COUNT(distinct SP.name)
 				series S
 		WHERE	SP.id = S.publication_type_id AND
 				S.publisher_id = P.id
-	 	) =
-		(SELECT COUNT(distinct SP.name)
-		FROM	series_publication_type SP)
+	 	) = 3
 
 -- c)
 SELECT C.name
@@ -32,22 +47,41 @@ FROM	(
 		) as T,
 		characters C
 WHERE	C.id = T.character_id
-ORDER BY T.nch DESC
+ORDER BY T.nch DESC LIMIT 10
+
+-- c) improved (no story)
+SELECT C.name
+FROM	(
+		SELECT	HC.character_id,
+				COUNT(*) as nch
+		FROM 	story_reprint SR,
+				artist A, 
+				has_script HS, 
+				has_characters HC
+		WHERE 	HS.artist_id = A.id AND
+				A.name LIKE '%Alan_Moore%' AND
+				HC.story_id = SR.origin_id AND
+				HC.story_id = HS.story_id
+		GROUP BY HC.character_id
+		) as T,
+		characters C
+WHERE	C.id = T.character_id
+ORDER BY T.nch DESC LIMIT 10
 
 -- d)
-SELECT 	A.name
+SELECT 	distinct A.name
 FROM 	artist A, 
 		has_script HS
 WHERE	HS.artist_id = A.id AND
 		(
-		SELECT	HS.artist_id
+		SELECT	COUNT(HS.artist_id)
 		FROM	has_pencils HP, 
 				story S
 		WHERE	HS.story_id = S.id AND
 				(S.title LIKE '%natur%' OR
 				S.synopsis LIKE '%natur%')
 		) = (
-		SELECT	HS.artist_id
+		SELECT	COUNT(HS.artist_id)
 		FROM	has_pencils HP, 
 				story S
 		WHERE	HP.artist_id = HS.artist_id AND
@@ -90,28 +124,31 @@ FROM	series SS,
 WHERE	T.pid = SS.publisher_id
 
 
--- f) left join wont work ???
+-- f)
 SELECT	T.name, 
 		T.num
 FROM	(
-		SELECT	L.name, 
+		SELECT	distinct L.name, 
 				COUNT(*) as num
 		FROM	language L,
 				series SE,
 				story ST, 
 				issue I
-		LEFT JOIN story_reprint SR ON SR.target_id = ST.id
 		WHERE	L.id = SE.language_id AND
 				SE.id = I.series_id AND
 				I.id = ST.issue_id AND
 				SE.publication_type_id = 2 AND
-				SR.target_id IS NULL
+				(SELECT COUNT(*)
+				FROM story_reprint SR
+				WHERE SR.target_id = ST.id)=0
 		GROUP BY L.name
 		)as T
-ORDER BY T.num DESC LIMIT 10
+WHERE 	T.num >= 10000
+ORDER BY T.num DESC
 
 -- g)
-SELECT 	STT.name
+SELECT 	distinct STT.name
+		country C,
 FROM 	language L,
 		series SE,
 		story ST, 	
@@ -124,10 +161,8 @@ WHERE	NOT C.name = 'Italy' AND
 		SE.publication_type_id = 2 AND
 		STT.id = ST.type_id
 
-all story types in italian
-
 -- h)
-SELECT A.name FROM artist A, has_script HS, Story S, Story_type ST
+SELECT distinct A.name FROM artist A, has_script HS, Story S, Story_type ST
 WHERE 
   A.id = HS.artist_id AND
   HS.story_id = S.id AND
@@ -167,7 +202,7 @@ ORDER BY ipn DESC LIMIT 10
 SELECT 	T.name,
 		AVG(years) AS lgh
 FROM	(
-		SELECT	I.name, 
+		SELECT	distinct I.name, 
 				(S.year_ended - S.year_began) AS years
 		FROM	series S,
 				indicia_publisher I
@@ -196,7 +231,9 @@ GROUP BY I.name
 ORDER BY nb DESC LIMIT 10
 
 -- l)
-SELECT	S.id, IP.name, COUNT(*) as nb
+SELECT	S.id, 
+		IP.name, 
+		COUNT(*) as nb
 FROM	story S, 
 		has_script HS,	
 		issue I,
@@ -208,7 +245,7 @@ GROUP BY S.id, IP.name
 ORDER BY nb DESC LIMIT 10
 
 -- m)
-SELECT	C.name
+SELECT	distinct C.name
 FROM	characters C,
 		has_characters HC,
 		story S,
@@ -224,7 +261,7 @@ WHERE 	C.id = HC.character_id AND
 -- n)
 SELECT	T.name
 FROM	(
-		SELECT	S.name,
+		SELECT	distinct S.name,
 				COUNT(*) as inb
 		FROM	series S,
 				issue I
