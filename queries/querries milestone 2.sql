@@ -75,8 +75,8 @@ SELECT 	distinct A.name
 FROM	artist A,
 		has_script SC,
 		has_pencils P,
-		has_color C,
-		has_inked I,
+		has_colors C,
+		has_inks I,
 		story S
 WHERE	A.id = SC.artist_id AND
 		A.id = P.artist_id AND
