@@ -32,7 +32,7 @@ FROM	(
 		) as T,
 		characters C
 WHERE	C.id = T.character_id
-ORDER BY T.nch
+ORDER BY T.nch DESC
 
 -- d)
 SELECT 	A.name
@@ -67,7 +67,7 @@ FROM	(
 		WHERE	S.publisher_id = P.id
 		GROUP BY P.id
 		) as T
-ORDER BY T.num LIMIT 10
+ORDER BY T.num DESC LIMIT 10
 
 so long: 10 publishier name in order by series
 
@@ -111,7 +111,6 @@ FROM	(
 ORDER BY T.num DESC LIMIT 10
 
 -- g)
-
 SELECT 	STT.name
 FROM 	language L,
 		series SE,
@@ -165,19 +164,20 @@ GROUP BY T.name
 ORDER BY ipn DESC LIMIT 10
 
 -- j)
-SELECT T.name,
-		AVG(*) as lgh
+SELECT 	T.name,
+		AVG(years) AS lgh
 FROM	(
 		SELECT	I.name, 
-				S.year_ended-S.year_began
+				(S.year_ended - S.year_began) AS years
 		FROM	series S,
-				publisher P,
 				indicia_publisher I
-		WHERE	S.publisher_id = P.id AND
-				I.publisher_id = P.id
-		) as T
+		WHERE	S.publisher_id = I.publisher_id AND
+				S.year_began < S.year_ended AND 
+		  		S.year_began > 0 AND 
+		  		S.year_ended > 0
+		) AS T
 GROUP BY T.name
-ORDER by lgh
+ORDER by lgh DESC
 
 -- k) 
 SELECT	I.name,
@@ -207,11 +207,19 @@ WHERE	HS.story_id = S.id AND
 GROUP BY S.id, IP.name
 ORDER BY nb DESC LIMIT 10
 
--- m) Print all Marvel heroes that appear in Marvel-DC story crossovers.
-
--- some indicia name are marvel dc
-
-LIKE '%marvel%DC%'
+-- m)
+SELECT	C.name
+FROM	characters C,
+		has_characters HC,
+		story S,
+		issue I,
+		indicia_publisher IP
+WHERE 	C.id = HC.character_id AND
+		S.id = HC.story_id AND
+		S.issue_id = I.id AND
+		I.indicia_publisher_id = IP.id AND
+		IP.name LIKE '%Marvel%DC%' AND
+		S.features LIKE C.name
 
 -- n)
 SELECT	T.name
@@ -223,7 +231,7 @@ FROM	(
 		WHERE	I.series_id = S.id
 		GROUP BY S.id
 		) AS T
-ORDER BY T.inb
+ORDER BY T.inb DESC LIMIT 5
 
 -- o) help, how to group by on 2 levels
 SELECT	I.title,
