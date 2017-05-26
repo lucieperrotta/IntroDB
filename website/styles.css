@@ -36,6 +36,12 @@ h2 {
 	font-family: 'Lora', serif;
 }
 
+#introduction {
+	margin:auto;
+	font-size:2em;
+	width:80%;
+}
+
 table.table_content {
 	border:1px solid black;
 	width:80%;

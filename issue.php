@@ -15,8 +15,8 @@ isbn, valid isbn become varchar
 
 
 // to test and not print/insert all lines
-$min = 880001;
-$max = 980001;
+$min = 76010;
+$max = 80010;
 $i = 0;
 
 
@@ -94,7 +94,6 @@ while(! feof($file)){
 
   }
 }
-var_dump($i);
 
 // print last 10 entries
 /*$s = $con->query("SELECT * FROM issue ORDER BY id DESC LIMIT 10");

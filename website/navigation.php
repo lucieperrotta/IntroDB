@@ -2,7 +2,7 @@
 
 <nav>
 	<ul>
-		<li><h1>Grand comics - KLT</h1></li>
+		<li><h1>Grand comics</h1></li>
 		<li><a href="index.php">Index</a></li>
 		<li><a href="search_delete.php">Search</a></li>
 		<li><a href="queries.php">Basic Queries</a></li>

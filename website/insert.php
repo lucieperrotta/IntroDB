@@ -504,12 +504,12 @@ $count = 5;
 <?php include("error_handler.php"); ?>
 
 <?php 
-$s = $con->query("SELECT * FROM series ORDER BY id DESC LIMIT 3");
+/*$s = $con->query("SELECT * FROM series ORDER BY id DESC LIMIT 3");
 $result = $s->fetchAll(PDO::FETCH_ASSOC);
 
 $text = '<table class="table_content">';
 foreach ($result as $key => $value) {
 	var_dump($value);
-}
+}*/
 ?>
 
