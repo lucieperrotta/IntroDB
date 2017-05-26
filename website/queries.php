@@ -154,6 +154,18 @@ if(isset($_POST["query"])){
 		break;
 		case "top5SeriesMostIssues":
 		break;
+		case "mostReprintedStory":
+		$id = $_POST["issue"]; 
+		$sql = "SELECT  S.title,
+		COUNT(*) as nb
+		FROM   story S, 
+		story_reprint SR
+		WHERE  S.issue_id = ".$id." AND
+		S.id = SR.origin_id
+		GROUP BY S.title
+		ORDER BY nb DESC LIMIT 1";
+		$columns = ["title"];
+		break;
 
 	}
 
@@ -260,7 +272,7 @@ if(isset($_POST["query"])){
 			<form action="" method="post">
 				<input type="hidden" name="query" value="mostReprintedStory"/>
 				<input type="submit" value="Given an issue, print its most reprinted story."/>
-				<input type="" name="issue" value="1">
+				<input type="text" name="issue" value="1">
 			</form>
 		</div>
 		<div id="results">
