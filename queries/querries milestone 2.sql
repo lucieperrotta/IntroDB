@@ -51,7 +51,7 @@ FROM 	story S,
 		story_reprint R
 WHERE 	S.id = R.origin_id
 GROUP BY R.origin_id
-ORDER BY COUNT(R.origin_id) DESC LIMIT 10
+ORDER BY COUNT(R.origin_id)
 
 -- g)
 SELECT 	distinct A.name
