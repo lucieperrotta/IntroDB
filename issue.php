@@ -15,8 +15,8 @@ isbn, valid isbn become varchar
 
 
 // to test and not print/insert all lines
-$min = 76010;
-$max = 80010;
+$min = 84011;
+$max = 88011;
 $i = 0;
 
 
