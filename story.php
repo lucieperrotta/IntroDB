@@ -3,11 +3,11 @@ include("db.php");
 include("functions.php");
 
 $file = fopen("comics/story.csv","r");
-$mysql = fopen("story.sql", "w"); // write into this sql to import 
+$mysql = fopen("story.csv", "w"); // write into this sql to import 
 
 
-$min = 116000;
-$max = 306000;
+$min = 1302321;
+$max = 1901000;
 $i = 0;
 
 var_dump(fgetcsv($file));
@@ -38,11 +38,14 @@ while(! feof($file)){
       $type_id = "NULL"; // backover do not use
     }
 
-    $query = 'INSERT INTO story(id, title, issue_id, synopsis, reprint_notes, notes, type_id) VALUES';
-    $query .= '('.$id.','.$title.', '.$issue_id.','.$synopsis.','.$reprint_notes.','.$notes.','.$type_id.'
-    );
+
+    $query = $id.','.$title.','.$issue_id.','.$synopsis.','.$reprint_notes.','.$notes.','.$type_id.'
     ';
-    fwrite($mysql,$query);
+
+    if(strpos($query, ",,")===false){
+      fwrite($mysql,$query);
+    }
+
 
   	//var_dump($query);
 

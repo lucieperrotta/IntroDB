@@ -34,7 +34,7 @@ function parseDoubleQuote($s) {
 
 	$res = str_replace('"', '\"', $s);
 	$res = str_replace('\\\\"', '\"', $res);
-	return '"'.$res.'"';
+	return $res;
 }
 
 

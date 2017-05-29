@@ -3,15 +3,15 @@ include("db.php");
 include("functions.php");
 
 $file = fopen("comics/series.csv","r");
-$mysql = fopen("series.sql", "w"); // write into this sql to import 
+$mysql = fopen("series.csv", "w"); // write into this sql to import 
 
 
 /*
 date marche pas -> besoin que year
 */
 
-$min = 8501;
-$max = 10000;
+$min = 106014;
+$max = 306014;
 $i = 0;
 
 var_dump(fgetcsv($file));
@@ -61,7 +61,7 @@ var_dump(fgetcsv($file));
   		$publishing_format = parseDoubleQuote($val[16]);
   		$publication_type_id = getInt($val[17]);
 
-  		$query = 'INSERT INTO series(id, name, format, year_began, year_ended, publication_dates, first_issue_id, last_issue_id, publisher_id, country_id, language_id, notes, color, dimensions, paper_stock, binding, publishing_format, publication_type_id) VALUES(
+  		/*$query = 'INSERT INTO series(id, name, format, year_began, year_ended, publication_dates, first_issue_id, last_issue_id, publisher_id, country_id, language_id, notes, color, dimensions, paper_stock, binding, publishing_format, publication_type_id) VALUES(
   		'.$id.','.$name.','.$format.','.$year_began.',
   		'.$year_ended.','.$publication_dates.',
   		'.$first_issue_id.','.$last_issue_id.','.$publisher_id.','.$country_id.',
@@ -69,6 +69,10 @@ var_dump(fgetcsv($file));
   		'.$color.','.$dimensions.','.$paper_stock.','.$binding.',
   		'.$publishing_format.','.$publication_type_id.'
   		);';
+*/
+
+      $query = $id.','.$name.','.$format.','.$year_began.','.$year_ended.','.$publication_dates.','.$first_issue_id.','.$last_issue_id.','.$publisher_id.','.$country_id.','.$language_id.','.$notes.','.$color.','.$dimensions.','.$paper_stock.','.$binding.','.$publishing_format.','.$publication_type_id . '
+';
 
   	//var_dump($query);
 

@@ -4,14 +4,14 @@ include("functions.php");
 
 $file = fopen("comics/story.csv","r");
 $csv = fopen("comics/character.csv", "a+"); 
-$has_csv = fopen("comics/has_character.csv","w+");
+$has_csv = fopen("comics/has_character.csv","a+");
 
 echo "<h1>Characters</h1>";
 
 $index = getLastIndex($csv);
 
-$min = 10300;
-$max = 100000000;
+$min = 22484;
+$max = 10000000000000000000;
 $i = 0;
 
 var_dump(fgetcsv($file));
@@ -48,9 +48,9 @@ while(! feof($file)){
       }
     }
 
-    if($i==$max){
+    /*if($i==$max){
       break;
-    }
+    }*/
   }
 
 }

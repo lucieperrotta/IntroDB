@@ -4,7 +4,7 @@ include("db.php");
 include("functions.php");
 
 $file = fopen("comics/issue.csv","r");
-$mysql = fopen("issue.sql", "w"); // write into this sql to import 
+$mysql = fopen("issue.csv", "w"); // write into this sql to import 
 /*
 date marche pas -> besoin que year
 
@@ -15,8 +15,8 @@ isbn, valid isbn become varchar
 
 
 // to test and not print/insert all lines
-$min = 76010;
-$max = 80010;
+$min = 0;
+$max = 1000;
 $i = 0;
 
 
@@ -72,11 +72,16 @@ while(! feof($file)){
 
 	// to debug, var_dump query or $con->query(query) -> should print a PDO object and not true or false (je crois que true veut dire qu'elle existe et false c'est qu'il y a une erreur) -> c/c une query dans sql dans phpmyadmin va te donner des indications sur pk ça fail
 
-	  $query = 'INSERT INTO issue(id, number, series_id, indicia_publisher_id, publication_date, price, page_count, indicia_frequency, notes, isbn, valid_isbn, barcode,title, on_sale_date, rating) VALUES(
+	  /*$query = 'INSERT INTO issue(id, number, series_id, indicia_publisher_id, publication_date, price, page_count, indicia_frequency, notes, isbn, valid_isbn, barcode,title, on_sale_date, rating) VALUES(
 	  '.$id.','.$number.','.$series_id.','.$indicia_publisher_id.','.$publication_date.',
 	  '.$price.','.$page_count.','.$indicia_frequency.','.$notes.',
 	  '.$isbn.','.$valid_isbn.','.$barcode.','.$title.','.$on_sale_date.','.$rating.'
-	  );';
+	  );';*/
+	  $query = $id.','.$number.','.$series_id.','.$indicia_publisher_id.','.$publication_date.','.$price.','.$page_count.','.$indicia_frequency.','.$notes.','.$isbn.','.$valid_isbn.','.$barcode.','.$title.','.$on_sale_date.','.$rating.'
+';
+    if(strpos($query, ",,")===false){
+      fwrite($mysql,$query);
+    }
 
 
 	  //if($id==36382) {var_dump($query);var_dump($val);var_dump($i);break;};
