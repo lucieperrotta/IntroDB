@@ -13,7 +13,9 @@ if(isset($_POST["query"])){
 
 	$columns;
 
+
 	$query = $_POST["query"];
+	echo "<h2>" . $query . "</h2>";
 	switch($query){
 		case "brandGroupHighestNumberBelgiumIndiciaPublisher":
 		$sql = "SELECT T.name FROM(SELECT B.name,  COUNT(*) AS bid FROM brand_group B, indicia_publisher I, country C WHERE	C.name = 'Belgium' AND
@@ -24,9 +26,9 @@ if(isset($_POST["query"])){
 		
 		case "idNamesPublishersDanishBookSeries":
 		$sql = "SELECT 	P.id, P.name
-FROM 	publisher P,
+		FROM 	publisher P,
 		series S
-WHERE	S.country_id = 56 AND
+		WHERE	S.country_id = 56 AND
 		S.publisher_id = P.id AND
 		S.publication_type_id = 1
 		";
@@ -47,9 +49,9 @@ WHERE	S.country_id = 56 AND
 		case "from1990NumberIssuesPerYear":
 		$sql = "SELECT 	I.publication_date,
 		COUNT(*)
-FROM 	issue I
-WHERE	I.publication_date >= 1990
-GROUP BY I.publication_date";
+		FROM 	issue I
+		WHERE	I.publication_date >= 1990
+		GROUP BY I.publication_date";
 		$columns = ["publication_date", "COUNT(*)"];
 		break;
 
@@ -97,16 +99,16 @@ GROUP BY I.publication_date";
 		break;
 		
 		case "nonReprintedStoriesBatmanNonFeatured":
-		$sql = "SELECT	S.title
-FROM 	story S,
+		$sql = "SELECT DISTINCT	S.title
+		FROM 	story S,
 		characters C1,
 		characters C2,
 		has_characters HS,
 		has_featured_characters HFC
-WHERE	0 =	(	SELECT COUNT(distinct R.origin_id)
-			 	FROM story_reprint R
-			 	WHERE S.id = R.origin_id
-			) AND
+		WHERE	0 =	(	SELECT COUNT(distinct R.origin_id)
+		FROM story_reprint R
+		WHERE S.id = R.origin_id
+		) AND
 		HS.character_id = C1.id AND
 		HS.story_id = S.id AND
 		C1.name LIKE '%Batman%' AND
@@ -118,28 +120,28 @@ WHERE	0 =	(	SELECT COUNT(distinct R.origin_id)
 		break;
 		
 		case "seriesNameHighestNumberIssuesWhoseStoryTypeNotOccuringMost":
-		$sql = "SELECT 	S.name, 
+		$sql = "SELECT   S.name, 
 		T2.nbi
-		FROM 	(
-		SELECT 	I.series_id, 
+		FROM   (
+		SELECT   I.series_id, 
 		COUNT(*) AS nbi
-		FROM 	issue I,
+		FROM   issue I,
 		(
 		SELECT distinct S.issue_id
-		FROM 	story S
-		WHERE 	S.type_id <>
+		FROM   story S
+		WHERE   S.type_id <>
 		(
-		SELECT 	S.type_id
-		FROM 	story S
+		SELECT   S.type_id
+		FROM   story S
 		GROUP BY S.type_id
 		ORDER BY COUNT(*) DESC LIMIT 1
 		)
 		) as T 
-		WHERE	I.id = T.issue_id
+		WHERE  I.id = T.issue_id
 		GROUP BY I.series_id
 		) as T2,
 		series S
-		WHERE 	S.id = T2.series_id
+		WHERE   S.id = T2.series_id
 		ORDER BY T2.nbi DESC
 		";
 		$columns = ["name", "nbi"];
@@ -340,7 +342,7 @@ WHERE	0 =	(	SELECT COUNT(distinct R.origin_id)
 
 		case "tenIndiciaHighestNumberScriptWritersSingleStory":
 		$sql="
-		SELECT	S.id, 
+		SELECT DISTINCT	S.id, 
 		IP.name, 
 		COUNT(*) as nb
 		FROM	story S, 
@@ -358,9 +360,21 @@ WHERE	0 =	(	SELECT COUNT(distinct R.origin_id)
 
 		case "allMarbelHeroesMarvelDC":
 		$sql="
-		
+		SELECT   distinct C.name 
+		FROM   characters C,
+		has_characters HC ,
+		has_featured_characters HFC,
+		story S,
+		issue I,
+		indicia_publisher IP
+		WHERE  HC.character_id = C.id AND
+		HFC.character_id = C.id AND
+		(HC.story_id = S.id OR HFC.story_id = S.id) AND
+		(S.issue_id = I.id OR I.id = S.issue_id) AND
+		(IP.id = I.indicia_publisher_id OR I.indicia_publisher_id) AND
+		IP.name LIKE '%Marvel%DC%'
 		";
-		$columns = [];
+		$columns = ["name"];
 		break;
 
 		case "top5SeriesMostIssues":
@@ -449,6 +463,10 @@ WHERE	0 =	(	SELECT COUNT(distinct R.origin_id)
 			<form action="" method="post">
 				<input type="hidden" name="query" value="namePublisherSeriesAllTypes"/>
 				<input type="submit" value="Print the names of publishers who have series with all series types."/>
+			</form>
+			<form action="" method="post">
+				<input type="hidden" name="query" value="tenMostReprintedCharactersAlanMoore"/>
+				<input type="submit" value="Print the 10 most-reprinted characters from Alan Moore's stories."/>
 			</form>
 			<form action="" method="post">
 				<input type="hidden" name="query" value="writersNatureStoryPencil"/>

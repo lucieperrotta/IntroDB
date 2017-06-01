@@ -3,7 +3,7 @@ include("db.php");
 include("functions.php");
 
 $file = fopen("comics/issue_reprint.csv","r");
-$mysql = fopen("issue_reprint.sql", "w"); // write into this sql to import 
+$mysql = fopen("issue_reprint.csv", "w+"); // write into this sql to import 
 
 
 /*
@@ -11,8 +11,8 @@ website id ->> mettre dans table website -> remettre foreign key
 year -> date
 */
 
-$min = 778;
-$max = 100000000;
+$min = 5000;
+$max = 1000000000;
 $i = 0;
 
 var_dump(fgetcsv($file));
@@ -23,7 +23,7 @@ var_dump(fgetcsv($file));
   2 => string 'name' (length=4)
 */
 
-  fwrite($mysql, "INSERT INTO issue_reprint(id,origin_id, target_id) VALUES");
+  //fwrite($mysql, "INSERT INTO issue_reprint(id,origin_id, target_id) VALUES");
 
   while(! feof($file)){
   	$i++;
@@ -37,8 +37,8 @@ var_dump(fgetcsv($file));
 
       if(empty($id)) continue;
 
-  		$query = '('.$id.', '.$origin.', '.$target.' ),
-      ';
+  		$query = $id.', '.$origin.', '.$target.'
+';
 
   	//var_dump($query);
 

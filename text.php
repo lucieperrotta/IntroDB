@@ -8,8 +8,8 @@ $csv = fopen("comics/artist.csv", "a+");
 $file = fopen("comics/story.csv","r");
 //$has_editing = fopen("comics/has_editing_story.csv", "a+"); 
 //$has_editing = fopen("comics/has_colors.csv", "a+"); 
-//$has_editing = fopen("comics/has_script.csv", "a+"); 
-$has_editing = fopen("comics/has_pencils.csv", "a+"); 
+$has_editing = fopen("comics/has_script.csv", "a+"); 
+//$has_editing = fopen("comics/has_pencils.csv", "a+"); 
 //$has_editing = fopen("comics/has_letters.csv", "a+"); 
 //$has_editing = fopen("comics/has_inks.csv", "a+"); 
 //$has_editing = fopen("comics/has_editing_issue.csv", "a+");  
@@ -18,7 +18,7 @@ $has_editing = fopen("comics/has_pencils.csv", "a+");
 
 $index = getLastIndex($csv);
 
-$min = 48998;
+$min = 29511;
 $i = 0;
 
 var_dump(fgetcsv($file));
@@ -30,17 +30,16 @@ while(! feof($file)){
   if($i < $min) continue;
 
   $id = getInt($val[0]);
-  //$editing = parseDoubleQuote($val[9]);
-  //$editing_issue = parseDoubleQuote($val[8]);
-  //$inks = parseDoubleQuote($val[6]);
-  //$colors = parseDoubleQuote($val[7]);
-  //$script = parseDoubleQuote($val[4]);
-  //$letters = parseDoubleQuote($val[8]);
+  //$editing = parseDoubleQuoteHas($val[9]);
+  //$editing_issue = parseDoubleQuoteHas($val[8]);
+  //$inks = parseDoubleQuoteHas($val[6]);
+  //$colors = parseDoubleQuoteHas($val[7]);
+  $script = parseDoubleQuoteHas($val[4]);
+  //$letters = parseDoubleQuoteHas($val[8]);
+  //$pencils = parseDoubleQuoteHas($val[5]);
 
-  $pencils = parseDoubleQuote($val[5]);
-
-  if($pencils!="NULL"){
-    $editing_array = parseNames($pencils);
+  if($script!="NULL"){
+    $editing_array = parseNames($script);
     foreach ($editing_array as $p){
       $p = parseComments($p);
       if($p == "NULL") continue;

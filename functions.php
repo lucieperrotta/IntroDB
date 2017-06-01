@@ -37,6 +37,15 @@ function parseDoubleQuote($s) {
 	return $res;
 }
 
+function parseDoubleQuoteHas($s) {
+
+	if(parseNullValue($s)) return "NULL";
+
+	$res = str_replace('"', '\"', $s);
+	$res = str_replace('\\\\"', '\"', $res);
+	return '"'.$res.'"';
+}
+
 
 /*echo(getDateFromYear("[du borbel 1970's]]")."<br/>");
 echo(getDateFromYear("1897")."<br/>");

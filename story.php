@@ -3,11 +3,11 @@ include("db.php");
 include("functions.php");
 
 $file = fopen("comics/story.csv","r");
-$mysql = fopen("story.csv", "w"); // write into this sql to import 
+$mysql = fopen("story_5.csv", "w"); // write into this sql to import 
 
 
-$min = 1302321;
-$max = 1901000;
+$min = 702819; // 335819
+$max = 802819; // 838803
 $i = 0;
 
 var_dump(fgetcsv($file));

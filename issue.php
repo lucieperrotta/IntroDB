@@ -15,8 +15,8 @@ isbn, valid isbn become varchar
 
 
 // to test and not print/insert all lines
-$min = 0;
-$max = 1000;
+$min = 1155519; // 1430508
+$max = 1255519; // 1445894
 $i = 0;
 
 
@@ -77,16 +77,23 @@ while(! feof($file)){
 	  '.$price.','.$page_count.','.$indicia_frequency.','.$notes.',
 	  '.$isbn.','.$valid_isbn.','.$barcode.','.$title.','.$on_sale_date.','.$rating.'
 	  );';*/
+
+    if(strlen($barcode)>15 || preg_match("/[a-zA-Z]/", $barcode)==1) $barcode = "NULL";
+    if(strpos($publication_date, "?")!==false) $publication_date = "NULL";
+    $barcode = preg_replace("/[\s-]/", "", $barcode);
+
 	  $query = $id.','.$number.','.$series_id.','.$indicia_publisher_id.','.$publication_date.','.$price.','.$page_count.','.$indicia_frequency.','.$notes.','.$isbn.','.$valid_isbn.','.$barcode.','.$title.','.$on_sale_date.','.$rating.'
 ';
+
+
     if(strpos($query, ",,")===false){
       fwrite($mysql,$query);
     }
 
 
-	  //if($id==36382) {var_dump($query);var_dump($val);var_dump($i);break;};
 
-  	fwrite($mysql,$query);
+
+	  //if($id==36382) {var_dump($query);var_dump($val);var_dump($i);break;};
 
   	//var_dump($query);
   	/*$s1 = $con->query($query);

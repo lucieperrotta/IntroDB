@@ -10,8 +10,8 @@ echo "<h1>Characters</h1>";
 
 $index = getLastIndex($csv);
 
-$min = 22484;
-$max = 10000000000000000000;
+$min = 200092; // 223909 -> 224122
+$max = 200292;
 $i = 0;
 
 var_dump(fgetcsv($file));
@@ -48,9 +48,9 @@ while(! feof($file)){
       }
     }
 
-    /*if($i==$max){
+    if($i==$max){
       break;
-    }*/
+    }
   }
 
 }

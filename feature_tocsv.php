@@ -10,7 +10,7 @@ echo "<h1>Featuredd Character</h1>";
 
 $index = getLastIndex($csv);
 
-$min = 20099;
+$min = 30200;
 $i = 0;
 
 var_dump(fgetcsv($file));
@@ -22,7 +22,7 @@ while(! feof($file)){
   if($i > $min){
 
     $id = getInt($val[0]);
-    $features = parseDoubleQuote($val[2]);
+    $features = parseDoubleQuoteHas($val[2]);
     //$editing = parseDoubleQuote($val[9]);
     
     if($features!="NULL"){
