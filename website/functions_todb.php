@@ -35,7 +35,8 @@ function notNull($s,$on,$table){
 }
 
 function noDuplicata($s, $on, $table, $con){
-	$query = $con->query("SELECT id FROM ".$table." WHERE ".$on."=".$s); 
+	$s = "SELECT id FROM ".$table." WHERE ".$on."=".$s;
+	$query = $con->query($s); 
 	$id = $query->fetchAll(PDO::FETCH_ASSOC);
 	if(!empty($id)) {
 		header("Location: insert.php?currenttable=".$table."&code=error&cause=duplicata&on=".$on); exit();

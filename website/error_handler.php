@@ -21,6 +21,9 @@ if(isset($_GET["code"])) {
 			else if ($cause=="toolong"){
 				echo " because is too long";
 			}
+			else if ($cause=="alreadyexist"){
+				echo " because the pair already exists";
+			}
 		}
 	}
 	echo "</div>";

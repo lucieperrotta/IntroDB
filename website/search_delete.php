@@ -13,8 +13,6 @@ include("../db.php");
 		$table = $_POST["table"];
 		$sql = "DELETE FROM ".$table." WHERE id=" . $id;
 
-		var_dump($sql);
-
 		$add_query = $con->query($sql);
 		$results = $add_query->fetchAll(PDO::FETCH_ASSOC);
 	}
@@ -45,6 +43,7 @@ include("../db.php");
 				"story"=>"title", 
 				"artist"=>"name",
 				"characters"=>"name",
+				"publisher"=>"name",
 				"series"=>"name"];
 
 				$msc = 0;
@@ -111,7 +110,7 @@ include("../db.php");
 	<?php 
 
 	if(isset($_POST["delete"])){
-		echo "<h3>Entry with id ".$id." deleted</h3>";
+		echo "<br/><br/><h3>Entry with id ".$id." deleted</h3>";
 	}
 	?>
 

@@ -144,7 +144,7 @@ if(isset($_POST["query"])){
 		WHERE   S.id = T2.series_id
 		ORDER BY T2.nbi DESC
 		";
-		$columns = ["name", "nbi"];
+		$columns = ["name", "nb issue"];
 		break;
 		
 		case "namePublisherSeriesAllTypes":
@@ -304,7 +304,7 @@ if(isset($_POST["query"])){
 		GROUP BY BG.name
 		ORDER BY ipn DESC LIMIT 10
 		";
-		$columns = ["name", "ipn"];
+		$columns = ["name", "nb"];
 		break;
 
 		case "averageSeriesLengthPerIndicia":

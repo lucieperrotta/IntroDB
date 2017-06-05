@@ -7,6 +7,7 @@
 // nb of entries to display
 $count = 5;
  ?>
+}
 
 <body>
 
@@ -36,15 +37,16 @@ $count = 5;
 				<form method="post" action="process_insert_story.php">
 					<fieldset>
 						<h2>Story</h2>
-						Title: <input type="text" name="title" value="title"><br>
+						Title: <input type="text" name="title" value="title" maxlength="700"><br>
 						Features: <input type="text" name="features" value="features_test"><br>
-						Issue ID: <input type="text" name="issueId" value="1"><br>
-						Letters: <input type="text" name="letters" value="letters_test"><br><br>
-						Editing: <input type="text" name="editing" value="editing_test"><br>
-						Script: <input type="text" name="script" value="script_test"><br>
-						Inks: <input type="text" name="inks" value="ink_test"><br>
-						Colors: <input type="text" name="colors" value="color_test"><br>
-						Characters: <input type="text" name="characters" value="character_test"><br>
+						Issue ID: <input type="number" name="issueId" value="1"><br>
+						Letters: <input type="text" name="letters" value="letters_test" maxlength="255"><br><br><br><br><br>
+						Editing: <input type="text" name="editing" value="editing_test" maxlength="255"><br>
+						Script: <input type="text" name="script" value="script_test" maxlength="255"><br>
+						Pencils: <input type="text" name="pencils" value="pencils_test" maxlength="255"><br>
+						Inks: <input type="text" name="inks" value="ink_test" maxlength="255"><br>
+						Colors: <input type="text" name="colors" value="color_test" maxlength="255"><br><br><br><br>
+						Characters: <input type="text" name="characters" value="character_test" maxlength="255"><br>
 						Synopsis: <textarea type="text" name="synopsis" value="Synopsis">hey! </textarea><br>
 						Reprint notes: <input type="text" name="reprintNotes" value="sometextforreprintnotes"><br>
 						Notes: <input type="text" name="notes" value="notes"><br>
@@ -117,23 +119,23 @@ $count = 5;
 				<form method="post" action="process_insert_series.php">
 					<fieldset>
 						<h2>Series</h2>
-						Name: <input type="text" name="name" value="name"><br>
-						Format: <input type="text" name="format" value="format"><br>
-						year began: <input type="text" name="year_began" value="1234"><br>
-						year ended: <input type="text" name="year_ended" value="1234"><br>
-						Publication dates: <input type="text" name="publication_dates" value="1wefio"><br>
-						First issue ID: <input type="text" name="first_issue_id" value="1"><br>
-						Last issue ID: <input type="text" name="last_issue_id" value="1"><br>
-						Publisher ID: <input type="text" name="publisher_id" value="2"><br>
-						Country ID: <input type="text" name="country_id" value="1"><br>
-						Language ID: <input type="text" name="language_id" value="1"><br>
+						Name: <input type="text" name="name" value="name" maxlength="255"><br>
+						Format: <input type="text" name="format" value="format" maxlength="255"><br>
+						year began: <input type="number" name="year_began" value="1234" maxlength="4"><br>
+						year ended: <input type="number" name="year_ended" value="1234" maxlength="4"><br>
+						Publication dates: <input type="text" name="publication_dates" value="1wefio" maxlength="255"><br>
+						First issue ID: <input type="number" name="first_issue_id" value="1"><br>
+						Last issue ID: <input type="number" name="last_issue_id" value="1"><br>
+						Publisher ID: <input type="number" name="publisher_id" value="2"><br>
+						Country ID: <input type="number" name="country_id" value="1"><br>
+						Language ID: <input type="number" name="language_id" value="1"><br>
 						notes: <input type="text" name="notes" value="wefjwpfo"><br>
-						Color: <input type="text" name="color" value="color_test"><br><br>
-						dimensions: <input type="text" name="dimensions" value="dimensions"><br>
-						paper stock: <input type="text" name="paper_stock" value="paperstock"><br>
-						binding: <textarea type="text" name="binding" value="Synopsis">hey! </textarea><br>
-						publishing format: <input type="text" name="publishing_format" value="sometextforreprintnotes"><br>
-						publication type ID: <input type="text" name="publication_type_id" value="1"><br><br>
+						Color: <input type="text" name="color" value="color_test" maxlength="255"><br><br>
+						dimensions: <input type="text" name="dimensions" value="dimensions" maxlength="255"><br>
+						paper stock: <input type="text" name="paper_stock" value="paperstock" maxlength="255"><br>
+						binding: <textarea type="text" name="binding" value="binding" maxlength="255">hey! </textarea><br>
+						publishing format: <input type="text" name="publishing_format" value="sometextforreprintnotes" maxlength="255"><br>
+						publication type ID: <input type="number" name="publication_type_id" value="1"><br><br>
 					</fieldset>
 					<br/>
 					<input type="submit" value="Submit">
@@ -180,21 +182,21 @@ $count = 5;
 				<form method="post" action="process_insert_issue.php">
 					<fieldset>
 						<h2>Issue</h2>
-						Number: <input type="text" name="number" value="number"><br>
-						Series ID: <input type="text" name="series_id" value="1"><br>
-						Indicia Publisher ID: <input type="text" name="indicia_publisher_id" value="2"><br>
-						Publication date: <input type="text" name="publication_date" value="1234"><br>
-						price: <input type="text" name="price" value="price"><br><br>
-						Page Count: <input type="text" name="page_count" value="31"><br>
-						Indicia Frequency: <input type="text" name="indicia_frequency" value="Frequency"><br>
-						Editing: <input type="text" name="editing" value="editing_test"><br>
+						Number: <input type="text" name="number" value="number" maxlength="255"><br>
+						Series ID: <input type="number" name="series_id" value="1"><br>
+						Indicia Publisher ID: <input type="number" name="indicia_publisher_id" value="2" maxlength="4"><br>
+						Publication date: <input type="number" name="publication_date" value="1234" maxlength="4"><br>
+						price: <input type="text" name="price" value="price" maxlength="255"><br><br>
+						Page Count: <input type="number" name="page_count" value="31" maxlength="255"><br>
+						Indicia Frequency: <input type="text" name="indicia_frequency" value="Frequency" maxlength="255"><br>
+						Editing: <input type="text" name="editing" value="editing_test" maxlength="255"><br>
 						Notes: <input type="text" name="notes" value="notes"><br>
-						ISBN: <input type="text" name="isbn" value="isbn"><br><br><br>
-						Valid ISBN: <input type="text" name="valid_isbn" value="valid isbn"><br>
-						title: <textarea type="text" name="title" value="title">hey! </textarea><br>
-						On Sale Date: <input type="text" name="on_sale_date" value="1234"><br>
-						Barcode : <input type="text" name="barcode" value="1234567"><br>
-						rating : <input type="text" name="rating" value="rating"><br>
+						ISBN: <input type="text" name="isbn" value="isbn" maxlength="255"><br><br><br>
+						Valid ISBN: <input type="text" name="valid_isbn" value="valid isbn" maxlength="255"><br>
+						title: <textarea type="text" name="title" value="title" maxlength="255">hey! </textarea><br>
+						On Sale Date: <input type="text" name="on_sale_date" value="1234" maxlength="4"><br>
+						Barcode : <input type="number" name="barcode" value="1234567" maxlength="255"><br>
+						rating : <input type="text" name="rating" value="rating" maxlength="255"><br>
 					</fieldset>
 					<br/>
 					<input type="submit" value="Submit">
@@ -239,8 +241,8 @@ $count = 5;
 					<fieldset>
 						<h2>Issue Reprint</h2>
 						<input type="hidden" name="table" value="issue"><br/>
-						Origin Issue ID: <input type="text" name="origin_id" value="5"><br>
-						Target Issue ID: <input type="text" name="target_id" value="5"><br>
+						Origin Issue ID: <input type="number" name="origin_id" value="5"><br>
+						Target Issue ID: <input type="number" name="target_id" value="5"><br>
 					</fieldset>
 					<br/>
 					<input type="submit" value="Submit">
@@ -271,17 +273,17 @@ $count = 5;
 				<form method="post" action="process_insert_indicia_publisher.php">
 					<fieldset>
 						<h2>Indicia Publisher</h2>
-						Name: <input type="text" name="name" value="name"><br>
-						Publiser ID: <input type="text" name="publisher_id" value="1"><br><br>
-						Country ID: <input type="text" name="country_id" value="1"><br>
-						year began: <input type="text" name="year_began" value="1234"><br>
-						year ended: <input type="text" name="year_ended" value="1234"><br>
+						Name: <input type="text" name="name" value="name" maxlength="255"><br>
+						Publiser ID: <input type="number" name="publisher_id" value="1"><br><br>
+						Country ID: <input type="number" name="country_id" value="1"><br>
+						year began: <input type="number" name="year_began" value="1234" maxlength="4"><br>
+						year ended: <input type="number" name="year_ended" value="1234" maxlength="4"><br>
 						is surrogate: 
 						<input type="radio" name="is_surrogate" value="1"> Yes 
 						<input type="radio" name="is_surrogate" value="0"> No 
 						<input type="radio" name="is_surrogate" value="?" checked> ?<br>
 						Notes: <input type="text" name="notes" value="notes"><br>
-						website: <input type="text" name="website" value="urlhttp//"><br>
+						website: <input type="text" name="website" value="urlhttp//" maxlength="255"><br>
 					</fieldset>
 					<br/>
 					<input type="submit" value="Submit">
@@ -320,10 +322,10 @@ $count = 5;
 				<form method="post" action="process_insert_publisher.php">
 					<fieldset>
 						<h2>Publisher</h2>
-						Name: <input type="text" name="name" value="name"><br>
-						Country ID: <input type="text" name="country_id" value="1"><br><br>
-						year began: <input type="text" name="year_began" value="1234"><br>
-						year ended: <input type="text" name="year_ended" value="1234"><br><br/>
+						Name: <input type="text" name="name" value="name" maxlength="255"><br>
+						Country ID: <input type="number" name="country_id" value="1"><br><br>
+						year began: <input type="number" name="year_began" value="1234" maxlength="4"><br>
+						year ended: <input type="number" name="year_ended" value="1234" maxlength="4"><br><br/>
 						Notes: <input type="text" name="notes" value="notes"><br>
 						website: <input type="text" name="website" value="urlhttp//"><br>
 					</fieldset>
@@ -363,12 +365,12 @@ $count = 5;
 				<form method="post" action="process_insert_brand_group.php">
 					<fieldset>
 						<h2>Brand Group</h2>
-						Name: <input type="text" name="name" value="name"><br>
-						year began: <input type="text" name="year_began" value="1234"><br><br>
-						year ended: <input type="text" name="year_ended" value="1234"><br>
+						Name: <input type="text" name="name" value="name" maxlength="255"><br>
+						year began: <input type="number" name="year_began" value="1234" maxlength="4"><br><br>
+						year ended: <input type="number" name="year_ended" value="1234" maxlength="4"><br>
 						Notes: <input type="text" name="notes" value="notes"><br><br>
-						website: <input type="text" name="website" value="urlhttp//"><br>
-						Publisher ID: <input type="text" name="publisher_id" value="1"><br>
+						website: <input type="text" name="website" value="urlhttp//" maxlength="255"><br>
+						Publisher ID: <input type="number" name="publisher_id" value="1"><br>
 					</fieldset>
 					<br/>
 					<input type="submit" value="Submit">

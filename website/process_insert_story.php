@@ -38,9 +38,13 @@ $s = $con->query("SELECT id FROM story_type WHERE name='".$type."'"); // @todo c
 $type_id = $s->fetchAll(PDO::FETCH_ASSOC);
 if(empty($type_id)) {
 	$s = $con->query("SELECT MAX(id) FROM story_type");
-	$type_id = $s->fetchAll(PDO::FETCH_ASSOC)[0]["MAX(id)"] + 1;;
-	$s = $con->query('INSERT INTO story_type(id, name) VALUES('.$type_id.','.$type.')');
+	$type_id = $s->fetchAll(PDO::FETCH_ASSOC)[0]["MAX(id)"] + 1;
+	$query = 'INSERT INTO story_type(id, name) VALUES('.$type_id.','.$type.')';
+	$s = $con->query($query);
 	$s->fetchAll(PDO::FETCH_ASSOC);
+}
+else {
+	$type_id = $type_id[0]['id'];
 }
 
 
@@ -67,7 +71,7 @@ foreach ($features_array as $p){
 		$s = $con->query("SELECT id FROM characters WHERE name='".$p."'"); // @todo compare better
 		$feature_id = $s->fetchAll(PDO::FETCH_ASSOC);
 		if(empty($feature_id)) {
-				// add in artist
+				// add in characters
 			$s = $con->query("SELECT MAX(id) FROM characters");
 			$feature_id = $s->fetchAll(PDO::FETCH_ASSOC)[0]["MAX(id)"] + 1;
 			$s = $con->query('INSERT INTO characters(id, name) VALUES('.$feature_id.','.parseDoubleQuote($p).')');
@@ -77,7 +81,7 @@ foreach ($features_array as $p){
 			$feature_id = $feature_id[0]["id"];
 		}
 
-				// add in has_featured_characters
+		// add in has_featured_characters
 		$s = $con->query('INSERT INTO has_featured_characters(story_id, character_id) VALUES('.$id.','.$feature_id.')');
 		$s->fetchAll(PDO::FETCH_ASSOC);
 	}
